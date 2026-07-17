@@ -1,0 +1,7 @@
+body{margin:0;background:var(--surface-page);color:var(--text-body);font-family:var(--font-body);font-size:var(--text-md);line-height:var(--leading-body)}
+h1,h2,h3,h4,p,ol,ul{margin:0}
+a{color:var(--seal);text-decoration:underline;text-underline-offset:3px}
+a:hover{color:var(--seal-press)}
+::selection{background:var(--seal);color:var(--paper)}
+:focus-visible{outline:2.5px solid var(--seal);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}

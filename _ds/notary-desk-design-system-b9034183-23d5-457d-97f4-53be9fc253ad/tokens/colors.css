@@ -1,0 +1,10 @@
+:root{
+--desk:#191512;--bone:#F4EFE4;--paper:var(--bone);--ink:#211D1A;--seal:#872A21;--ledger:#2E4A3F;--wash:#EBE5D8;--rule:#C9C2B6;
+--ink-2:#4A443C;--muted:#6B6459;--seal-press:#6E1F18;--ledger-press:#243B32;
+--doc-shadow:0 3px 18px rgba(0,0,0,.5);
+--surface-page:var(--paper);--surface-desk:var(--desk);--surface-recessed:var(--wash);--surface-private:var(--ledger);
+--text-body:var(--ink);--text-secondary:var(--ink-2);--text-muted:var(--muted);--text-on-private:var(--paper);--text-on-desk:var(--bone);
+--accent-action:var(--seal);--border-rule:var(--rule);--border-strong:var(--ink);
+--status-recorded:var(--ledger);--status-void:var(--seal);
+}
+[data-theme='day']{--desk:#E2D9C6;--doc-shadow:0 2px 12px rgba(33,29,26,.25);--text-on-desk:#211D1A}
