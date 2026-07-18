@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import WalletChip from './ds/WalletChip.jsx'
-import { listWallets, connectWallet, shortAddress } from './wallet.js'
+import { listWallets, connectWallet, shortAddress, NETWORK_ID } from './wallet.js'
+import { CONTRACT_ADDRESS, readWalletConfig, probeProofServer } from './chain.js'
 import { APP_NAME, LISTING, PERSONAS, SEED_EVENTS, APPLY_TX, COMMIT_TX, REVEAL_TX, today } from './data.js'
 import Desk from './screens/Desk.jsx'
 import Apply from './screens/Apply.jsx'
@@ -23,6 +24,8 @@ export default function App() {
     return saved === 'day' || saved === 'night' ? saved : 'night'
   })
   const [wallet, setWallet] = useState(null)
+  const [walletCfg, setWalletCfg] = useState(null)
+  const [proofServerUp, setProofServerUp] = useState(null)
   const [connecting, setConnecting] = useState(false)
   const [pick, setPick] = useState(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -42,7 +45,10 @@ export default function App() {
 
   useEffect(() => {
     if (screen !== 'flight') return
-    const i = setInterval(() => setT((x) => Math.round((x + 0.1) * 10) / 10), 100)
+    // Wall-clock elapsed, not tick counting: browsers clamp timers to one
+    // tick per second in background tabs, which would stretch the flight.
+    const start = Date.now()
+    const i = setInterval(() => setT(Math.round((Date.now() - start) / 100) / 10), 100)
     return () => clearInterval(i)
   }, [screen])
 
@@ -71,7 +77,12 @@ export default function App() {
     try {
       const { api, address } = await connectWallet(w)
       setWallet({ api, address: shortAddress(address) })
-      setLandingError('')
+      const cfg = await readWalletConfig(api)
+      setWalletCfg(cfg)
+      setLandingError(cfg && !cfg.networkMatches
+        ? 'Wallet is on ' + cfg.networkId + '; this app expects ' + NETWORK_ID + '. Switch the network in the wallet settings.'
+        : '')
+      setProofServerUp(cfg ? await probeProofServer(cfg.proverServerUri) : null)
     } catch (err) {
       setLandingError(err.message)
     } finally {
@@ -81,7 +92,7 @@ export default function App() {
 
   const toggleWallet = () => {
     if (connecting) return
-    if (wallet) { setWallet(null); setPick(null); return }
+    if (wallet) { setWallet(null); setWalletCfg(null); setProofServerUp(null); setPick(null); return }
     if (pick) { setPick(null); return }
     const found = listWallets()
     // MOCK: with no wallet extension installed, connect falls back to a local UI toggle
@@ -241,11 +252,30 @@ export default function App() {
               <span>LISTING</span><span style={{ fontWeight: 400, color: 'var(--ink-2)' }}>{LISTING.id}</span>
             </span>
             <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '11px 0', borderBottom: '1px solid var(--rule)', font: '600 11px/1 var(--font-mono)', letterSpacing: '.1em' }}>
-              <span>CONTRACT</span><span style={{ fontWeight: 400, color: 'var(--ink-2)' }}>4B21E7{'…'}8D3F</span>
+              <span>CONTRACT</span>
+              <span style={{ fontWeight: 400, color: CONTRACT_ADDRESS ? 'var(--ink-2)' : 'var(--muted)' }}>
+                {CONTRACT_ADDRESS ? shortAddress(CONTRACT_ADDRESS).toUpperCase() : 'DEPLOY PENDING'}
+              </span>
             </span>
-            <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '11px 0', font: '600 11px/1 var(--font-mono)', letterSpacing: '.1em' }}>
-              <span>NETWORK</span><span style={{ fontWeight: 400, color: 'var(--ink-2)' }}>MIDNIGHT TESTNET</span>
+            <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '11px 0', borderBottom: walletCfg ? '1px solid var(--rule)' : 'none', font: '600 11px/1 var(--font-mono)', letterSpacing: '.1em' }}>
+              <span>NETWORK</span>
+              <span style={{ fontWeight: 400, color: walletCfg && !walletCfg.networkMatches ? 'var(--seal)' : 'var(--ink-2)' }}>
+                {walletCfg ? walletCfg.networkId.toUpperCase() + (walletCfg.networkMatches ? '' : ' · EXPECTED ' + NETWORK_ID.toUpperCase()) : NETWORK_ID.toUpperCase() + ' · WALLET NOT READ'}
+              </span>
             </span>
+            {walletCfg && (
+              <>
+                <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12, padding: '11px 0', borderBottom: '1px solid var(--rule)', font: '600 11px/1 var(--font-mono)', letterSpacing: '.1em' }}>
+                  <span style={{ flex: 'none' }}>INDEXER</span><span style={{ fontWeight: 400, color: 'var(--ink-2)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{walletCfg.indexerUri}</span>
+                </span>
+                <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12, padding: '11px 0', font: '600 11px/1 var(--font-mono)', letterSpacing: '.1em' }}>
+                  <span style={{ flex: 'none' }}>PROOF SERVER</span>
+                  <span style={{ fontWeight: 400, color: proofServerUp ? 'var(--ink-2)' : 'var(--seal)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {walletCfg.proverServerUri}{proofServerUp === false ? ' · UNREACHABLE' : ''}
+                  </span>
+                </span>
+              </>
+            )}
             <span style={{ fontSize: 12, fontStyle: 'italic', color: 'var(--muted)', borderTop: '1px solid var(--rule)', paddingTop: 10 }}>Day and night live on the lamp chain, top right.</span>
           </div>
         </div>
