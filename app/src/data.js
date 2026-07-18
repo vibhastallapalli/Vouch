@@ -21,13 +21,21 @@ export const HARD_BADGES = [
   { key: 'deposit', label: 'DEPOSIT RETURNED', rule: 'last deposit returned in full' },
 ]
 
-export const SOFT_FILTERS = [
-  { key: 'moveIn', label: 'MOVE-IN BY SEP 1', matches: (p) => p.soft.moveInBySep },
-  { key: 'lease12', label: '12-MONTH LEASE', matches: (p) => p.soft.leaseMonths === 12 },
-  { key: 'noPets', label: 'NO PETS', matches: (p) => p.soft.pets === 'None' },
+// Numeric preference fields. The applicant sets their own value (self-claimed,
+// unproven); the landlord filters each with a direction (gte/lte) + target.
+// dir/target here are the defaults applied when a filter is first switched on.
+export const SOFT_FIELDS = [
+  { key: 'leaseMonths', label: 'LEASE LENGTH', unit: 'MO', min: 6, max: 36, step: 6, dir: 'gte', target: 18 },
+  { key: 'moveInWeeks', label: 'MOVE-IN WITHIN', unit: 'WK', min: 1, max: 12, step: 1, dir: 'lte', target: 4 },
+  { key: 'occupants', label: 'OCCUPANTS', unit: '', min: 1, max: 6, step: 1, dir: 'lte', target: 2 },
+  { key: 'pets', label: 'PETS', unit: '', min: 0, max: 4, step: 1, dir: 'lte', target: 1 },
 ]
 
-// Persona A applies live during the demo; B and C are already in the pool.
+// Persona A applies live during the demo; the rest are already in the pool.
+// Everyone clears the proven badges by construction, so the spread lives in the
+// soft fields: A and B are the two top contenders (identical except B moves in a
+// week sooner), C-F are middling, G-J are weak. Only A's credentials are ever
+// rendered, so the pre-applied ghosts carry just what the pool and ledger show.
 export const PERSONAS = [
   {
     id: 'A',
@@ -39,7 +47,7 @@ export const PERSONAS = [
       income: { issuer: 'Northline Payroll', monthlyIncome: 7400, expires: '12 Jan 2027' },
       reference: { issuer: 'RentTrack Payments', monthsRented: 31, lateCount: 1, depositReturned: true },
     },
-    soft: { moveIn: 'Aug 1', moveInBySep: true, leaseMonths: 12, pets: 'None', occupants: 1 },
+    soft: { leaseMonths: 24, moveInWeeks: 2, occupants: 1, pets: 0 },
     preApplied: false,
   },
   {
@@ -48,14 +56,10 @@ export const PERSONAS = [
     identity: 'Daniel Roy',
     commitment: '4b0e77…c2d9',
     nullifier: '9a31cd…5f02',
-    credentials: {
-      income: { issuer: 'Northline Payroll', monthlyIncome: 8100, expires: '03 Mar 2027' },
-      reference: { issuer: 'RentTrack Payments', monthsRented: 44, lateCount: 0, depositReturned: true },
-    },
-    soft: { moveIn: 'Sep 15', moveInBySep: false, leaseMonths: 24, pets: 'Cat', occupants: 2 },
+    soft: { leaseMonths: 24, moveInWeeks: 1, occupants: 1, pets: 0 },
     preApplied: true,
     tx: '8f3a4c…c21e',
-    date: '16 Jul 2026',
+    date: '17 Jul 2026',
   },
   {
     id: 'C',
@@ -63,14 +67,87 @@ export const PERSONAS = [
     identity: 'Lena Park',
     commitment: 'e2a95c…1b44',
     nullifier: '77d0be…88c1',
-    credentials: {
-      income: { issuer: 'Northline Payroll', monthlyIncome: 6900, expires: '28 Feb 2027' },
-      reference: { issuer: 'RentTrack Payments', monthsRented: 19, lateCount: 2, depositReturned: true },
-    },
-    soft: { moveIn: 'Aug 15', moveInBySep: true, leaseMonths: 12, pets: 'Dog', occupants: 2 },
+    soft: { leaseMonths: 12, moveInWeeks: 6, occupants: 2, pets: 1 },
     preApplied: true,
     tx: 'd90b17…44aa',
     date: '17 Jul 2026',
+  },
+  {
+    id: 'D',
+    entryNo: '0110',
+    identity: 'Priya Shah',
+    commitment: '1f7c30…a2e8',
+    nullifier: '3b8e21…9c04',
+    soft: { leaseMonths: 18, moveInWeeks: 5, occupants: 2, pets: 0 },
+    preApplied: true,
+    tx: 'a1b2c3…d4e5',
+    date: '16 Jul 2026',
+  },
+  {
+    id: 'E',
+    entryNo: '0111',
+    identity: 'Sam Ellis',
+    commitment: '7a2d90…4f1b',
+    nullifier: '2c9f57…b310',
+    soft: { leaseMonths: 12, moveInWeeks: 4, occupants: 3, pets: 1 },
+    preApplied: true,
+    tx: 'b2c3d4…e5f6',
+    date: '16 Jul 2026',
+  },
+  {
+    id: 'F',
+    entryNo: '0112',
+    identity: 'Tom Becker',
+    commitment: '0e5b46…d7c2',
+    nullifier: '8f14a0…6e2d',
+    soft: { leaseMonths: 12, moveInWeeks: 8, occupants: 2, pets: 2 },
+    preApplied: true,
+    tx: 'c3d4e5…f607',
+    date: '15 Jul 2026',
+  },
+  {
+    id: 'G',
+    entryNo: '0113',
+    identity: 'Rob Nunez',
+    commitment: 'b3c8f1…2a90',
+    nullifier: '4d70e9…1f5c',
+    soft: { leaseMonths: 6, moveInWeeks: 10, occupants: 4, pets: 2 },
+    preApplied: true,
+    tx: 'd4e5f6…0718',
+    date: '15 Jul 2026',
+  },
+  {
+    id: 'H',
+    entryNo: '0114',
+    identity: 'Casey Wood',
+    commitment: '66a2be…09d3',
+    nullifier: 'c018f4…7b62',
+    soft: { leaseMonths: 6, moveInWeeks: 12, occupants: 5, pets: 1 },
+    preApplied: true,
+    tx: 'e5f607…1829',
+    date: '14 Jul 2026',
+  },
+  {
+    id: 'I',
+    entryNo: '0115',
+    identity: 'Nadia Haddad',
+    commitment: '90fe12…3c8a',
+    nullifier: '5a2d0b…e491',
+    soft: { leaseMonths: 6, moveInWeeks: 9, occupants: 3, pets: 3 },
+    preApplied: true,
+    tx: 'f60718…293a',
+    date: '14 Jul 2026',
+  },
+  {
+    id: 'J',
+    entryNo: '0116',
+    identity: 'Wes Carter',
+    commitment: '2d47c9…b015',
+    nullifier: 'e83f16…0a7d',
+    soft: { leaseMonths: 12, moveInWeeks: 11, occupants: 4, pets: 2 },
+    preApplied: true,
+    tx: '071829…3a4b',
+    date: '13 Jul 2026',
   },
 ]
 
@@ -78,10 +155,18 @@ export const APPLY_TX = '4b21e7…8d3f'
 export const COMMIT_TX = 'a90c44…17de'
 export const REVEAL_TX = '7c31be…e402'
 
+// Ledger seed: one recorded application per pre-applied persona (keeps the pool
+// and the public register in sync), plus the listing-opened event.
 export const SEED_EVENTS = [
-  { no: '0106', date: '17 Jul 2026', event: 'Application recorded', detail: 'Nullifier 77d0be…88c1', tx: 'd90b17…44aa', kind: 'recorded' },
-  { no: '0105', date: '16 Jul 2026', event: 'Application recorded', detail: 'Nullifier 9a31cd…5f02', tx: '8f3a4c…c21e', kind: 'recorded' },
-  { no: '0104', date: '16 Jul 2026', event: 'Listing opened', detail: 'LST-0007 · rent 2,200 · deposit 2,200', tx: '21c8e0…9f3b', kind: 'recorded' },
+  ...PERSONAS.filter((p) => p.preApplied).map((p) => ({
+    no: p.entryNo,
+    date: p.date,
+    event: 'Application recorded',
+    detail: 'Nullifier ' + p.nullifier,
+    tx: p.tx,
+    kind: 'recorded',
+  })),
+  { no: '0104', date: '13 Jul 2026', event: 'Listing opened', detail: 'LST-0007 · rent 2,200 · deposit 2,200', tx: '21c8e0…9f3b', kind: 'recorded' },
 ]
 
 export const today = () =>

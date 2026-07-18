@@ -1,8 +1,11 @@
 import Button from '../ds/Button.jsx'
-import { LISTING, HARD_BADGES, SOFT_FILTERS } from '../data.js'
+import { LISTING, HARD_BADGES, SOFT_FIELDS } from '../data.js'
 
-export default function Pool({ entries, filters, onToggleFilter, committed, onCommit, onContinueAsCommitted }) {
-  const matching = entries.filter((p) => SOFT_FILTERS.every((f) => !filters.has(f.key) || f.matches(p)))
+const dirOk = (v, { dir, target }) => (dir === 'gte' ? v >= target : v <= target)
+const moveInLabel = (w) => (w <= 1 ? 'THIS WEEK' : 'IN ' + w + ' WK')
+
+export default function Pool({ entries, filters, onToggleFilter, onSetFilter, committed, onCommit, onContinueAsCommitted }) {
+  const matching = entries.filter((p) => SOFT_FIELDS.every((f) => !filters[f.key] || dirOk(p.soft[f.key], filters[f.key])))
   return (
     <main style={{ display: 'flex', flexDirection: 'column', gap: 18, padding: '36px 40px 48px', maxWidth: 1080 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 16, flexWrap: 'wrap' }}>
@@ -20,14 +23,29 @@ export default function Pool({ entries, filters, onToggleFilter, committed, onCo
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
           {HARD_BADGES.map((b) => <span key={b.key} className="nd-badge" title={b.rule}>{b.label}</span>)}
         </div>
-        <span className="mn-label" style={{ marginTop: 6 }}>Filter on preferences · self-claimed</span>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          {SOFT_FILTERS.map((f) => (
-            <button key={f.key} className="nd-filterbtn" aria-pressed={filters.has(f.key)} onClick={() => onToggleFilter(f.key)} disabled={!!committed}>
-              <span className="nd-filterbox" aria-hidden="true" />
-              {f.label}
-            </button>
-          ))}
+        <span className="mn-label" style={{ marginTop: 6 }}>Filter on preferences · self-claimed · set your own threshold</span>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {SOFT_FIELDS.map((f) => {
+            const active = filters[f.key]
+            return (
+              <div key={f.key} style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+                <button className="nd-filterbtn" aria-pressed={!!active} onClick={() => onToggleFilter(f.key)} disabled={!!committed}>
+                  <span className="nd-filterbox" aria-hidden="true" />
+                  {f.label}
+                </button>
+                {active && (
+                  <div className="nd-filterctl">
+                    <button type="button" className="nd-dirbtn" onClick={() => onSetFilter(f.key, { dir: active.dir === 'gte' ? 'lte' : 'gte' })} disabled={!!committed}>
+                      {active.dir === 'gte' ? 'AT LEAST' : 'AT MOST'}
+                    </button>
+                    <button type="button" className="nd-stepbtn" aria-label={'decrease ' + f.label + ' target'} onClick={() => onSetFilter(f.key, { target: Math.max(f.min, active.target - f.step) })} disabled={!!committed || active.target <= f.min}>−</button>
+                    <span style={{ minWidth: 52, textAlign: 'center' }}>{active.target}{f.unit ? ' ' + f.unit : ''}</span>
+                    <button type="button" className="nd-stepbtn" aria-label={'increase ' + f.label + ' target'} onClick={() => onSetFilter(f.key, { target: Math.min(f.max, active.target + f.step) })} disabled={!!committed || active.target >= f.max}>+</button>
+                  </div>
+                )}
+              </div>
+            )
+          })}
         </div>
       </div>
 
@@ -55,8 +73,8 @@ export default function Pool({ entries, filters, onToggleFilter, committed, onCo
                 {HARD_BADGES.map((b) => <span key={b.key} className="nd-badge">{b.label}</span>)}
               </div>
               <div style={{ font: '400 12px/1.7 var(--font-mono)', color: 'var(--ink-2)' }}>
-                <span style={{ display: 'block' }}>MOVE-IN {p.soft.moveIn.toUpperCase()}</span>
-                <span style={{ display: 'block' }}>{p.soft.leaseMonths}-MONTH LEASE · PETS: {p.soft.pets.toUpperCase()} · {p.soft.occupants} OCCUPANT{p.soft.occupants > 1 ? 'S' : ''}</span>
+                <span style={{ display: 'block' }}>MOVE-IN {moveInLabel(p.soft.moveInWeeks)} · {p.soft.leaseMonths}-MONTH LEASE</span>
+                <span style={{ display: 'block' }}>{p.soft.occupants} OCCUPANT{p.soft.occupants > 1 ? 'S' : ''} · {p.soft.pets} PET{p.soft.pets === 1 ? '' : 'S'}</span>
                 <span style={{ display: 'block', color: 'var(--muted)' }}>COMMITMENT {p.commitment}</span>
               </div>
               {!committed && <span><Button variant="secondary" onClick={() => onCommit(p)}>Commit to this entry</Button></span>}
