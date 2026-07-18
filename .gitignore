@@ -3,3 +3,5 @@ CLAUDE.md
 graphify-out/
 _notes/
 .graphifyignore
+node_modules/
+app/dist/
