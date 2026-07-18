@@ -1,7 +1,7 @@
-export default function WalletChip({ connected = false, address = 'addr1···x7q9', onClick }) {
+export default function WalletChip({ connected = false, address = 'addr1···x7q9', busy = false, onClick }) {
   if (connected)
     return (
-      <button type="button" className="mn-chip mn-chip--on" onClick={onClick} title="Lace wallet connected">
+      <button type="button" className="mn-chip mn-chip--on" onClick={onClick} title="Wallet connected. Click to disconnect.">
         <span className="mn-chip__mark">Lace</span>
         <span>{address}</span>
       </button>
@@ -9,7 +9,7 @@ export default function WalletChip({ connected = false, address = 'addr1···x7
   return (
     <button type="button" className="mn-chip mn-chip--off" onClick={onClick}>
       <span className="mn-chip__mark">Lace</span>
-      <span>Connect wallet</span>
+      <span>{busy ? 'Connecting…' : 'Connect wallet'}</span>
     </button>
   )
 }

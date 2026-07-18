@@ -6,6 +6,7 @@ import Seal from './ds/Seal.jsx'
 import SequenceNav from './ds/SequenceNav.jsx'
 import Status from './ds/Status.jsx'
 import LedgerSplit from './ds/LedgerSplit.jsx'
+import { listWallets, connectWallet, shortAddress } from './wallet.js'
 
 const PROOF_SECONDS = 7.5
 const STAGES = ['Reading commitment', 'Building circuit', 'Generating proof', 'Posting to chain']
@@ -80,7 +81,9 @@ export default function App() {
     const saved = localStorage.getItem('nd-mode')
     return saved === 'day' || saved === 'night' ? saved : 'night'
   })
-  const [connected, setConnected] = useState(false)
+  const [wallet, setWallet] = useState(null)
+  const [connecting, setConnecting] = useState(false)
+  const [pick, setPick] = useState(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [t, setT] = useState(0)
   const [error, setError] = useState('')
@@ -127,11 +130,33 @@ export default function App() {
     if (e.detail) btn.blur()
   }
 
-  // MOCK: wallet connect is a local UI toggle. Real Lace DApp-connector wiring is a separate task.
-  const toggleWallet = () => {
-    setConnected((c) => !c)
-    setLandingError('')
+  const connectTo = async (w) => {
+    setPick(null)
+    setConnecting(true)
+    try {
+      const { api, address } = await connectWallet(w)
+      setWallet({ api, address: shortAddress(address) })
+      setLandingError('')
+    } catch (err) {
+      setLandingError(err.message)
+    } finally {
+      setConnecting(false)
+    }
   }
+
+  const toggleWallet = () => {
+    if (connecting) return
+    if (wallet) { setWallet(null); setPick(null); return }
+    if (pick) { setPick(null); return }
+    const found = listWallets()
+    // MOCK: with no wallet extension installed, connect falls back to a local UI toggle
+    // with a placeholder address so the flow still runs. Labeled in the README.
+    if (found.length === 0) { setWallet({ mock: true, address: 'addr1···x7q9' }); setLandingError(''); return }
+    if (found.length === 1) { connectTo(found[0]); return }
+    setPick(found)
+  }
+
+  const connected = !!wallet
 
   const navDesk = () => { setScreen('landing'); setError(''); setLandingError('') }
   const navRegister = () => setScreen('register')
@@ -202,8 +227,19 @@ export default function App() {
             <button className="nd-navbtn" onClick={navVerify} style={navStyle(screen === 'verify')}>VERIFY</button>
           </nav>
         </div>
-        <span style={{ display: 'block', flex: 'none' }}>
-          <WalletChip connected={connected} onClick={toggleWallet} />
+        <span style={{ position: 'relative', display: 'block', flex: 'none' }}>
+          <WalletChip connected={connected} address={wallet ? wallet.address : undefined} busy={connecting} onClick={toggleWallet} />
+          {pick && (
+            <div style={{ position: 'absolute', top: 'calc(100% + 6px)', right: 0, minWidth: 190, background: 'var(--paper)', border: '1.5px solid var(--ink)', zIndex: 7 }}>
+              <span className="mn-label" style={{ display: 'block', padding: '10px 12px 6px', color: 'var(--muted)' }}>Choose a wallet</span>
+              {pick.map((w, i) => (
+                <button key={i} className="nd-walletopt" onClick={() => connectTo(w)}>
+                  {w.icon && <img src={w.icon} alt="" width="16" height="16" />}
+                  <span>{w.name || 'Wallet ' + (i + 1)}</span>
+                </button>
+              ))}
+            </div>
+          )}
         </span>
       </header>
 
