@@ -93,6 +93,12 @@ is deployed.
 - The rental reference assumes platform-issued payment data (rent payment
   platforms, property software). Not every tenancy has it; renters without
   it would lean on the guarantor branch, which is roadmap, not built.
+- The previous-landlord reference in the apply screen is a demo mock:
+  attaching a bill grants a permanent LANDLORD VERIFIED badge without
+  reading or checking any document ("we take their word for it"). It stands
+  in for an issuer signature over a landlord attestation; a real build would
+  verify that signature in circuit, not trust an upload. Labeled in
+  app/src/screens/Apply.jsx.
 - Guarantor OR branch for first-timers, listing bond drawdown automation,
   timeout repick when a committed applicant ghosts, and joint applicants
   summing incomes are specified here and not built in the weekend contract.
