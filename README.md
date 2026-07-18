@@ -102,6 +102,9 @@ is deployed.
   Ontario.
 - Credentials carry an expiry timestamp checked in circuit; stale income
   does not pass.
+- The frontend in app/ currently runs on sample register data, and its
+  wallet connect is a local UI toggle labeled as mock in the code. Real
+  Lace connection and contract-backed data are separate tasks.
 
 ## Repo layout
 
@@ -109,3 +112,6 @@ is deployed.
   circuits listed there and nothing else.
 - _ds/: the Notary Desk design system (tokens, component bundle, style
   guide) the UI is built on.
+- app/: the frontend (Vite + React). Imports the design tokens straight
+  from _ds/ and ports the design prototype screens one to one. Run with
+  npm install then npm run dev inside app/.
