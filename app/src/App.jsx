@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import WalletChip from './ds/WalletChip.jsx'
 import { listWallets, connectWallet, shortAddress } from './wallet.js'
-import { APP_NAME, LISTING, PERSONAS, SEED_EVENTS, APPLY_TX, COMMIT_TX, REVEAL_TX, today } from './data.js'
+import { APP_NAME, LISTING, PERSONAS, SOFT_FIELDS, SEED_EVENTS, APPLY_TX, COMMIT_TX, REVEAL_TX, today } from './data.js'
 import Desk from './screens/Desk.jsx'
 import Apply from './screens/Apply.jsx'
 import Flight from './screens/Flight.jsx'
@@ -31,7 +31,8 @@ export default function App() {
   const [block, setBlock] = useState(1204867)
   const [events, setEvents] = useState(SEED_EVENTS)
   const [applied, setApplied] = useState(false)
-  const [filters, setFilters] = useState(new Set())
+  const [applicantSoft, setApplicantSoft] = useState(() => ({ ...DEMO_APPLICANT.soft }))
+  const [filters, setFilters] = useState({})
   const [committed, setCommitted] = useState(null)
   const [revealed, setRevealed] = useState(false)
 
@@ -116,11 +117,14 @@ export default function App() {
 
   const toggleFilter = (key) =>
     setFilters((f) => {
-      const next = new Set(f)
-      if (next.has(key)) next.delete(key)
-      else next.add(key)
-      return next
+      if (f[key]) {
+        const { [key]: _, ...rest } = f
+        return rest
+      }
+      const d = SOFT_FIELDS.find((x) => x.key === key)
+      return { ...f, [key]: { dir: d.dir, target: d.target } }
     })
+  const setFilter = (key, patch) => setFilters((f) => ({ ...f, [key]: { ...f[key], ...patch } }))
 
   const commitTo = (p) => {
     setCommitted(p)
@@ -138,7 +142,9 @@ export default function App() {
     ])
   }
 
-  const poolEntries = PERSONAS.filter((p) => p.preApplied || (p.id === DEMO_APPLICANT.id && applied))
+  const poolEntries = PERSONAS
+    .filter((p) => p.preApplied || (p.id === DEMO_APPLICANT.id && applied))
+    .map((p) => (p.id === DEMO_APPLICANT.id ? { ...p, soft: applicantSoft } : p))
   const proofCount = events.filter((e) => e.kind === 'recorded' && e.event === 'Application recorded').length
   const onApplySide = ['apply', 'flight', 'applied', 'reveal'].includes(screen)
   const navStyle = (active) => ({ color: active ? 'var(--ink)' : 'var(--muted)', borderBottom: '1.5px solid ' + (active ? 'var(--seal)' : 'transparent') })
@@ -205,7 +211,7 @@ export default function App() {
           />
         )}
         {screen === 'apply' && (
-          <Apply persona={DEMO_APPLICANT} applied={applied} error={landingError} onGenerate={generateProof} onOpenReceipt={() => setScreen('applied')} />
+          <Apply persona={DEMO_APPLICANT} soft={applicantSoft} onSoftChange={setApplicantSoft} applied={applied} error={landingError} onGenerate={generateProof} onOpenReceipt={() => setScreen('applied')} />
         )}
         {screen === 'flight' && <Flight t={t} proofSeconds={PROOF_SECONDS} ring={RING} />}
         {screen === 'applied' && <Applied persona={DEMO_APPLICANT} ring={RING} onPool={goPool} onRegister={goRegister} />}
@@ -214,6 +220,7 @@ export default function App() {
             entries={poolEntries}
             filters={filters}
             onToggleFilter={toggleFilter}
+            onSetFilter={setFilter}
             committed={committed}
             onCommit={commitTo}
             onContinueAsCommitted={() => setScreen('reveal')}
