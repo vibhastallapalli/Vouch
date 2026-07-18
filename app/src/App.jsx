@@ -108,7 +108,7 @@ export default function App() {
   const generateProof = () => {
     setEvents((es) => [
       { no: DEMO_APPLICANT.entryNo, date: today(), event: 'Application recorded', detail: 'Nullifier ' + DEMO_APPLICANT.nullifier, tx: '', kind: 'pending' },
-      ...es,
+      ...es.filter((e) => e.no !== DEMO_APPLICANT.entryNo),
     ])
     setT(0)
     setScreen('flight')
