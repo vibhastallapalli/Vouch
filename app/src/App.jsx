@@ -179,8 +179,9 @@ export default function App() {
       return
     }
     setError('')
+    const today = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
     setEntries((es) => [
-      { no: '0049', date: '15 Jul 2026', fact: 'Question title', kind: 'pending', tx: '', note: '', block: '' },
+      { no: '0049', date: today, fact: 'Question title', kind: 'pending', tx: '', note: '', block: '' },
       ...es.filter((x) => x.no !== '0049'),
     ])
     setT(0)
