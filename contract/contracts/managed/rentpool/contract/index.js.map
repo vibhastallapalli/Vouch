@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "file": "index.js",
+  "sourceRoot": "../../../../",
+  "sources": ["contracts/rentpool.compact"],
+  "names": [],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;EAeA;;;;;;;;;;MAOA,AAAA,KAGC;;;;;cAHoB,WAAoB;cAAE,WAAoB;;;;;;;;;;;;;;;;;;;;;;;;;yCAA1C,WAAoB,+BAAE,WAAoB;;;;;;;;;uCAA1C,WAAoB;uCAAE,WAAoB;;;OAG9D;MAGD,AAAA,iBACC;;OAAA;MAID,AAAA,gBACC;;OAAA;MAGD,AAAA,cACC;;OAAA;MAGD,AAAA,MACC;;OAAA;;;;GAxBA;EAHD;;;;;UAAY,iBAA0B;UAAE,oBAA6B;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;IANrE;;;;;;;;;yEAAqD;IACrD;;;;;;;;;yEAAwD;IAGxD;;;;;;;;;;yEAAyC;IAGvC;;;;;;;2HAAgC,iBAAe;;yEAA3B;IACpB;;;;;;;2HAAmC,oBAAkB;;yEAA9B;;;;;;;GACxB;EAID,AAAA,QAGC,4BAHoB,WAAoB,EAAE,WAAoB;qDACrD;;;;;;;;;;;4KAA2B,WAAS;;;;0HAA1B;;IAClB;;;;;;;;;;2HAA2B,WAAS;;;;;wEAA1B;;GACX;EAGD,AAAA,oBACC,CADgC,WAAoB,EAAE,YAAqB,gBAC3E;EAID,AAAA,mBACC,CAD+B,WAAoB,gBACnD;EAGD,AAAA,iBACC,CAD6B,WAAoB,gBACjD;EAGD,AAAA,SACC,CADqB,WAAoB,gBACzC;;;;;;;;;;;;;;;;IAjCD;qCAAA;;;;;;;;;;;0GAAqD;KAAA;IACrD;qCAAA;;;;;;;;;;;0GAAwD;KAAA;IAGxD;;;;;uCAAA;;;;;;;;;;;;;;;;4GAAyC;;;;;;uCAAzC;;;;;;;;;;;;4GAAyC;;;;;;;;;;;;;;uCAAzC;;;;;;;;;;;;;;;4GAAyC;;;;;;;;;KAAA;;;;;;;;EAezC,AAAA,iBACC;;;;UADgC,WAAoB;UAAE,YAAqB;;;;;;;;;;;;;;;+CAA3C,WAAoB,EAAE,YAAqB;GAC3E;EAID,AAAA,gBACC;;;;UAD+B,WAAoB;;;;;;;;8CAApB,WAAoB;GACnD;EAGD,AAAA,cACC;;;;UAD6B,WAAoB;;;;;;;;4CAApB,WAAoB;GACjD;EAGD,AAAA,MACC;;;;UADqB,WAAoB;;;;;;;;oCAApB,WAAoB;GACzC;;;;"
+}

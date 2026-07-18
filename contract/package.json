@@ -1,0 +1,8 @@
+{
+  "name": "rentpool-contract",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "compile": "compact compile contracts/rentpool.compact contracts/managed/rentpool"
+  }
+}
