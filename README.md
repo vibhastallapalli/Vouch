@@ -102,9 +102,12 @@ is deployed.
   Ontario.
 - Credentials carry an expiry timestamp checked in circuit; stale income
   does not pass.
-- The frontend in app/ currently runs on sample register data, and its
-  wallet connect is a local UI toggle labeled as mock in the code. Real
-  Lace connection and contract-backed data are separate tasks.
+- The frontend in app/ currently runs on sample register data. Wallet
+  connect goes through the real Midnight dapp connector (enumerates
+  injected wallets, connects on preprod, shows the address); when no
+  wallet extension is installed it falls back to a local mock toggle
+  with a placeholder address, labeled in the code. Contract-backed data
+  is a separate task.
 
 ## Repo layout
 
