@@ -102,12 +102,15 @@ is deployed.
   Ontario.
 - Credentials carry an expiry timestamp checked in circuit; stale income
   does not pass.
-- The frontend in app/ currently runs on sample register data. Wallet
-  connect goes through the real Midnight dapp connector (enumerates
-  injected wallets, connects on preprod, shows the address); when no
-  wallet extension is installed it falls back to a local mock toggle
-  with a placeholder address, labeled in the code. Contract-backed data
-  is a separate task.
+- The frontend in app/ is the full demo flow on mock data: the listing,
+  the three applicant personas, their credentials, commitments,
+  nullifiers, and every transaction id are sample values defined in
+  app/src/data.js, labeled there. Proof generation is a timed animation,
+  not a real proof. Wallet connect goes through the real Midnight dapp
+  connector (enumerates injected wallets, connects on preprod, shows the
+  address); with no wallet extension installed it falls back to a local
+  mock toggle with a placeholder address, labeled in the code. Wiring the
+  flow to the deployed contract replaces data.js.
 
 ## Repo layout
 
@@ -115,6 +118,9 @@ is deployed.
   circuits listed there and nothing else.
 - _ds/: the Notary Desk design system (tokens, component bundle, style
   guide) the UI is built on.
-- app/: the frontend (Vite + React). Imports the design tokens straight
-  from _ds/ and ports the design prototype screens one to one. Run with
-  npm install then npm run dev inside app/.
+- app/: the frontend (Vite + React), presented in the UI as Vouch (one
+  constant in app/src/data.js if the name changes). Notary Desk design
+  system, tokens imported straight from _ds/. Screens: listing desk,
+  applicant credential wallet and proof flow, the anonymous pool with
+  live badge filtering and commit, reveal-and-pay, and the per-listing
+  event register. Run with npm install then npm run dev inside app/.
