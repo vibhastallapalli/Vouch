@@ -3,97 +3,86 @@
 // came from a chain or a real issuer. Shapes follow interface.md. Labeled in
 // the README limitations section.
 
+export const APP_NAME = 'Vouch'
+
 export const LISTING = {
   id: 'LST-0007',
   title: 'Two bedroom on Marlowe Street',
   rent: 2200,
   ratio: 3,
-  minMonths: 12,
-  maxLate: 1,
   deposit: 2200,
-  maxReveals: 3,
+  available: 'Sep 1, 2026',
 }
 
-// Hard badges, all required, all or nothing (interface.md section 6)
-export const BADGES = [
-  {
-    key: 'income',
-    label: 'Income ratio',
-    requirement: (L) => `income at least ${L.ratio}x rent`,
-    pass: (p, L) => p.income.monthlyIncome >= L.ratio * L.rent,
-  },
-  {
-    key: 'months',
-    label: 'Months rented',
-    requirement: (L) => `rented at least ${L.minMonths} months`,
-    pass: (p, L) => p.reference.monthsRented >= L.minMonths,
-  },
-  {
-    key: 'late',
-    label: 'Late count',
-    requirement: (L) => `never more than ${L.maxLate} late`,
-    pass: (p, L) => p.reference.lateCount <= L.maxLate,
-  },
-  {
-    key: 'deposit',
-    label: 'Deposit returned',
-    requirement: () => 'last deposit returned in full',
-    pass: (p) => p.reference.depositReturned === true,
-  },
+export const HARD_BADGES = [
+  { key: 'income', label: 'INCOME 3X RENT', rule: 'monthly income clears 3 times the rent' },
+  { key: 'months', label: '12+ MONTHS RENTED', rule: 'at least 12 months of tenancy history' },
+  { key: 'late', label: 'AT MOST 2 LATE', rule: 'no more than 2 late payments on record' },
+  { key: 'deposit', label: 'DEPOSIT RETURNED', rule: 'last deposit returned in full' },
 ]
 
-export const qualifies = (p, L) => BADGES.every((b) => b.pass(p, L))
+export const SOFT_FILTERS = [
+  { key: 'moveIn', label: 'MOVE-IN BY SEP 1', matches: (p) => p.soft.moveInBySep },
+  { key: 'lease12', label: '12-MONTH LEASE', matches: (p) => p.soft.leaseMonths === 12 },
+  { key: 'noPets', label: 'NO PETS', matches: (p) => p.soft.pets === 'None' },
+]
 
+// Persona A applies live during the demo; B and C are already in the pool.
 export const PERSONAS = [
   {
-    key: 'avery',
-    name: 'Avery',
-    identity: { name: 'Avery Reyes', dob: '14 Mar 1998', contact: 'avery.reyes@mail.example' },
-    commitment: 'c41d9a…07be',
-    nullifier: '9e2f11…c3a4',
-    income: { monthlyIncome: 7200, issuer: 'mock-paystream-payroll', expiresAt: '12 Jan 2027' },
-    reference: { monthsRented: 26, lateCount: 0, depositReturned: true, issuer: 'mock-rentflow-platform', expiresAt: '02 Feb 2027' },
-    soft: { moveIn: '2026-08-01', moveInText: '01 Aug 2026', leaseMonths: 12, pets: 'None', occupants: 1 },
+    id: 'A',
+    entryNo: '0107',
+    identity: 'Maya Okafor',
+    commitment: 'c9d4a1…77b0',
+    nullifier: '5e12f8…03aa',
+    credentials: {
+      income: { issuer: 'Northline Payroll', monthlyIncome: 7400, expires: '12 Jan 2027' },
+      reference: { issuer: 'RentTrack Payments', monthsRented: 31, lateCount: 1, depositReturned: true },
+    },
+    soft: { moveIn: 'Aug 1', moveInBySep: true, leaseMonths: 12, pets: 'None', occupants: 1 },
+    preApplied: false,
   },
   {
-    key: 'sam',
-    name: 'Sam',
-    identity: { name: 'Sam Okafor', dob: '02 Nov 1994', contact: 'sam.okafor@mail.example' },
-    commitment: 'a8c3f2…5d19',
-    nullifier: '44b7e0…f28c',
-    income: { monthlyIncome: 6900, issuer: 'mock-paystream-payroll', expiresAt: '30 Nov 2026' },
-    reference: { monthsRented: 14, lateCount: 1, depositReturned: true, issuer: 'mock-rentflow-platform', expiresAt: '21 Dec 2026' },
-    soft: { moveIn: '2026-08-15', moveInText: '15 Aug 2026', leaseMonths: 24, pets: 'Cat', occupants: 2 },
+    id: 'B',
+    entryNo: '0105',
+    identity: 'Daniel Roy',
+    commitment: '4b0e77…c2d9',
+    nullifier: '9a31cd…5f02',
+    credentials: {
+      income: { issuer: 'Northline Payroll', monthlyIncome: 8100, expires: '03 Mar 2027' },
+      reference: { issuer: 'RentTrack Payments', monthsRented: 44, lateCount: 0, depositReturned: true },
+    },
+    soft: { moveIn: 'Sep 15', moveInBySep: false, leaseMonths: 24, pets: 'Cat', occupants: 2 },
+    preApplied: true,
+    tx: '8f3a4c…c21e',
+    date: '16 Jul 2026',
   },
   {
-    key: 'jordan',
-    name: 'Jordan',
-    identity: { name: 'Jordan Vale', dob: '27 Jun 2001', contact: 'jordan.vale@mail.example' },
-    commitment: 'f10b64…9ac2',
-    nullifier: '7d95a3…e611',
-    income: { monthlyIncome: 8400, issuer: 'mock-paystream-payroll', expiresAt: '18 Mar 2027' },
-    reference: { monthsRented: 31, lateCount: 0, depositReturned: true, issuer: 'mock-rentflow-platform', expiresAt: '09 Jan 2027' },
-    soft: { moveIn: '2026-09-01', moveInText: '01 Sep 2026', leaseMonths: 12, pets: 'Dog', occupants: 2 },
-  },
-  {
-    key: 'riley',
-    name: 'Riley',
-    identity: { name: 'Riley Chen', dob: '08 Sep 1999', contact: 'riley.chen@mail.example' },
-    commitment: 'b72e18…4f0d',
-    nullifier: '1ca6d9…88b5',
-    income: { monthlyIncome: 5800, issuer: 'mock-paystream-payroll', expiresAt: '25 Oct 2026' },
-    reference: { monthsRented: 9, lateCount: 0, depositReturned: true, issuer: 'mock-rentflow-platform', expiresAt: '15 Nov 2026' },
-    soft: { moveIn: '2026-08-01', moveInText: '01 Aug 2026', leaseMonths: 12, pets: 'None', occupants: 1 },
+    id: 'C',
+    entryNo: '0106',
+    identity: 'Lena Park',
+    commitment: 'e2a95c…1b44',
+    nullifier: '77d0be…88c1',
+    credentials: {
+      income: { issuer: 'Northline Payroll', monthlyIncome: 6900, expires: '28 Feb 2027' },
+      reference: { issuer: 'RentTrack Payments', monthsRented: 19, lateCount: 2, depositReturned: true },
+    },
+    soft: { moveIn: 'Aug 15', moveInBySep: true, leaseMonths: 12, pets: 'Dog', occupants: 2 },
+    preApplied: true,
+    tx: 'd90b17…44aa',
+    date: '17 Jul 2026',
   },
 ]
 
-export const personaByKey = (key) => PERSONAS.find((p) => p.key === key)
+export const APPLY_TX = '4b21e7…8d3f'
+export const COMMIT_TX = 'a90c44…17de'
+export const REVEAL_TX = '7c31be…e402'
 
-// Two entries are pre-seeded so the pool is alive before the live demo
-// applicant joins (battle plan: two proofs precomputed, one generated live).
-export const SEED_POOL = [
-  { no: '0001', personaKey: 'sam', date: '16 Jul 2026', status: 'entered', tx: '8f3a4c…c21e' },
-  { no: '0002', personaKey: 'jordan', date: '17 Jul 2026', status: 'entered', tx: 'd90b17…44aa' },
+export const SEED_EVENTS = [
+  { no: '0106', date: '17 Jul 2026', event: 'Application recorded', detail: 'Nullifier 77d0be…88c1', tx: 'd90b17…44aa', kind: 'recorded' },
+  { no: '0105', date: '16 Jul 2026', event: 'Application recorded', detail: 'Nullifier 9a31cd…5f02', tx: '8f3a4c…c21e', kind: 'recorded' },
+  { no: '0104', date: '16 Jul 2026', event: 'Listing opened', detail: 'LST-0007 · rent 2,200 · deposit 2,200', tx: '21c8e0…9f3b', kind: 'recorded' },
 ]
 
-export const fmtMoney = (n) => '$' + n.toLocaleString('en-US')
+export const today = () =>
+  new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
