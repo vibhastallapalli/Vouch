@@ -100,8 +100,13 @@ is deployed.
   fraud-sensitive facts are proven.
 - Dropped the legal residency check: a landlord cannot lawfully ask it in
   Ontario.
-- Credentials carry an expiry timestamp checked in circuit; stale income
-  does not pass.
+- Contract mid-build status: apply proves the income threshold, binds the
+  identity commitment, and spends the per-listing nullifier in circuit.
+  The registry check (issuer signature and credential expiry verified in
+  circuit) is a later task, so right now the income figure is
+  applicant-asserted, not issuer-certified; the witness carries a MOCKED
+  trust label until that lands. Credential expiry is checked in circuit
+  once it does; stale income does not pass.
 - The frontend in app/ is the full demo flow on mock data: the listing,
   the three applicant personas, their credentials, commitments,
   nullifiers, and every transaction id are sample values defined in

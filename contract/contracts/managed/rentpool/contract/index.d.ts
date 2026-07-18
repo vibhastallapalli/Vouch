@@ -1,18 +1,26 @@
 import type * as __compactRuntime from '@midnight-ntwrk/compact-runtime';
 
 export type Witnesses<PS> = {
+  identitySecret(context: __compactRuntime.WitnessContext<Ledger, PS>): [PS, Uint8Array];
+  identityBlinding(context: __compactRuntime.WitnessContext<Ledger, PS>): [PS, Uint8Array];
+  identityNameHash(context: __compactRuntime.WitnessContext<Ledger, PS>): [PS, Uint8Array];
+  identityDobHash(context: __compactRuntime.WitnessContext<Ledger, PS>): [PS, Uint8Array];
+  identityContactHash(context: __compactRuntime.WitnessContext<Ledger, PS>): [PS, Uint8Array];
+  monthlyIncome(context: __compactRuntime.WitnessContext<Ledger, PS>): [PS, bigint];
 }
 
 export type ImpureCircuits<PS> = {
   apply(context: __compactRuntime.CircuitContext<PS>,
         listingId_0: Uint8Array,
-        nullifier_0: Uint8Array): __compactRuntime.CircuitResults<PS, []>;
+        monthlyRent_0: bigint,
+        incomeRatio_0: bigint): __compactRuntime.CircuitResults<PS, []>;
 }
 
 export type ProvableCircuits<PS> = {
   apply(context: __compactRuntime.CircuitContext<PS>,
         listingId_0: Uint8Array,
-        nullifier_0: Uint8Array): __compactRuntime.CircuitResults<PS, []>;
+        monthlyRent_0: bigint,
+        incomeRatio_0: bigint): __compactRuntime.CircuitResults<PS, []>;
 }
 
 export type PureCircuits = {
@@ -25,7 +33,8 @@ export type PureCircuits = {
 export type Circuits<PS> = {
   apply(context: __compactRuntime.CircuitContext<PS>,
         listingId_0: Uint8Array,
-        nullifier_0: Uint8Array): __compactRuntime.CircuitResults<PS, []>;
+        monthlyRent_0: bigint,
+        incomeRatio_0: bigint): __compactRuntime.CircuitResults<PS, []>;
   commitToApplicant(context: __compactRuntime.CircuitContext<PS>,
                     listingId_0: Uint8Array,
                     applicantC_0: Uint8Array): __compactRuntime.CircuitResults<PS, []>;
@@ -44,6 +53,12 @@ export type Ledger = {
     size(): bigint;
     member(elem_0: Uint8Array): boolean;
     [Symbol.iterator](): Iterator<Uint8Array>
+  };
+  pool: {
+    isEmpty(): boolean;
+    size(): bigint;
+    member(elem_0: { listingId: Uint8Array, c: Uint8Array }): boolean;
+    [Symbol.iterator](): Iterator<{ listingId: Uint8Array, c: Uint8Array }>
   };
 }
 
