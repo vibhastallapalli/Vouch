@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{
+--font-display:'Libre Caslon Text',Georgia,'Times New Roman',serif;
+--font-body:'Public Sans','Helvetica Neue',sans-serif;
+--font-mono:'IBM Plex Mono','Courier New',monospace;
+--text-label:13px;--text-sm:15px;--text-md:17px;--text-lg:22px;--text-xl:32px;--text-2xl:48px;--text-3xl:76px;
+--track-label:.08em;--track-wide:.12em;
+--leading-tight:1.08;--leading-body:1.55;
+}

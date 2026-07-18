@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="stylesheet" href="_ds/notary-desk-design-system-b9034183-23d5-457d-97f4-53be9fc253ad/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/notary-desk-design-system-b9034183-23d5-457d-97f4-53be9fc253ad/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/notary-desk-design-system-b9034183-23d5-457d-97f4-53be9fc253ad/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/notary-desk-design-system-b9034183-23d5-457d-97f4-53be9fc253ad/tokens/base.css">
+  <link rel="stylesheet" href="_ds/notary-desk-design-system-b9034183-23d5-457d-97f4-53be9fc253ad/tokens/components.css">
+  <script src="_ds/notary-desk-design-system-b9034183-23d5-457d-97f4-53be9fc253ad/_ds_bundle.js"></script>
+  <style>
+    body{background:#191512;margin:0}
+    a{color:#F4EFE4}a:hover{color:#C9C2B6}
+    /* card-scoped theme: the whole document flips, not the desk */
+    [data-card]{--card-surface:#F8F7F3;--paper:#F8F7F3;--ink:#211D1A;--ink-2:#4A443C;--muted:#6B6459;--wash:#EBE5D8;--rule:#C9C2B6;--seal:#872A21;--seal-press:#6E1F18;--ledger:#2E4A3F;--ledger-text:#2E4A3F;--card-shadow:0 6px 26px rgba(0,0,0,.38);--pool:0;--sun:1;--edge:rgba(0,0,0,0)}
+    [data-card][data-mode="night"]{--card-surface:#211D1A;--ink:#F8F7F3;--ink-2:rgba(248,247,243,.72);--muted:rgba(248,247,243,.48);--wash:rgba(248,247,243,.07);--rule:rgba(248,247,243,.26);--seal:#9C3A2C;--seal-press:#7C2C21;--ledger:#22362D;--ledger-text:rgba(196,216,203,.85);--card-shadow:-56px 40px 70px rgba(0,0,0,.62);--pool:1;--sun:0;--edge:rgba(248,247,243,.14)}
+    [data-card],[data-card] *{transition:background-color var(--nd-dur,.4s) ease,color var(--nd-dur,.4s) ease,border-color var(--nd-dur,.4s) ease,box-shadow var(--nd-dur,.4s) ease,opacity var(--nd-dur,.4s) ease}
+    [data-card] svg *{transition:stroke var(--nd-dur,.4s) ease,fill var(--nd-dur,.4s) ease,opacity var(--nd-dur,.4s) ease}
+    [data-card] .nd-sealwrap .mn-seal--embossed{color:var(--seal)}
+    [data-card] [data-reg-row]{transition:background-color .12s ease,color var(--nd-dur,.4s) ease,border-color var(--nd-dur,.4s) ease}
+    .nd-chain:hover .nd-chain-line{height:58px}
+    .nd-tug{animation:nd-tug .3s ease}
+    @keyframes nd-tug{0%{transform:translateY(0)}45%{transform:translateY(6px)}100%{transform:translateY(0)}}
+    .nd-obj{-webkit-tap-highlight-color:transparent}
+    .nd-obj .nd-obj-label{opacity:0;transition:opacity .15s ease}
+    .nd-obj:hover .nd-obj-label{opacity:1}
+    .nd-steam{animation:nd-steam 3s ease-in-out infinite}
+    .nd-steam-b{animation:nd-steam 3s ease-in-out 1.4s infinite}
+    @keyframes nd-steam{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(-2.5px);opacity:.25}}
+    @media (prefers-reduced-motion:reduce){[data-card],[data-card] *,[data-card] svg *{transition:none}.nd-tug{animation:none}.nd-steam,.nd-steam-b{animation:none}}
+  </style>
+</helmet>
+<section style="display:flex;flex-wrap:wrap;gap:72px;padding:72px;align-items:flex-start">
+  <div id="1a" style="display:flex;flex-direction:column;gap:14px">
+    <span style="font:600 12px/1 var(--font-mono);letter-spacing:.14em;color:#F4EFE4;opacity:.7">1a &middot; DAY</span>
+    <div data-card data-mode="day" data-screen-label="Landing DAY" style="position:relative;width:1020px;background:var(--card-surface);box-shadow:var(--card-shadow);border:1px solid var(--edge);font-family:var(--font-body);color:var(--ink)">
+      <header style="display:flex;justify-content:space-between;align-items:center;gap:24px;padding:18px 40px;border-bottom:1.5px solid var(--ink)">
+        <span class="mn-label" style="white-space:nowrap">Runs on Midnight</span>
+        <div style="display:flex;align-items:flex-end;gap:22px;align-self:flex-end;margin-bottom:-18px;margin-right:132px">
+          <span class="nd-obj" title="The ledger opens the register" style="position:relative;display:block;color:var(--ink-2)">
+            <svg width="20" height="36" viewBox="0 0 20 36" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3.25" y="2.75" width="13.5" height="32.5"></rect>
+              <path d="M3.25 8h13.5M3.25 30.5h13.5"></path>
+              <path d="M13.5 2.75v4.5" stroke="var(--seal)"></path>
+            </svg>
+            <span class="nd-obj-label" style="position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);font:600 9px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted);white-space:nowrap;pointer-events:none">REGISTER</span>
+          </span>
+          <span class="nd-obj" title="The loupe opens verify" style="position:relative;display:block;color:var(--ink-2)">
+            <svg width="30" height="35" viewBox="0 0 30 35" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <circle cx="12" cy="12" r="8.25"></circle>
+              <path d="M18 18l8.5 15"></path>
+            </svg>
+            <span class="nd-obj-label" style="position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);font:600 9px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted);white-space:nowrap;pointer-events:none">VERIFY</span>
+          </span>
+          <span class="nd-obj" title="The inkwell. Ink is ready once a wallet is connected" style="position:relative;display:block;color:var(--ink-2)">
+            <svg width="46" height="35" viewBox="0 0 46 35" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M10 33.5L11.5 21h11L24 33.5Z"></path>
+              <path d="M14 21v-4.5h6V21"></path>
+              <g style="opacity:1"><path d="M29 33h15"></path><path d="M29 33l-3.5-1.2"></path></g>
+              <g style="opacity:0"><path d="M17 17.5L31 3.5"></path><path d="M27.5 7l3 3"></path></g>
+            </svg>
+            <span class="nd-obj-label" style="position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);font:600 9px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted);white-space:nowrap;pointer-events:none">INK DRY</span>
+          </span>
+          <span class="nd-obj" title="The key connects a wallet" style="position:relative;display:block;color:var(--ink-2)">
+            <svg width="28" height="36" viewBox="0 0 28 36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <circle cx="14" cy="4" r="1.4"></circle>
+              <path d="M14 5.5v3"></path>
+              <g style="opacity:1">
+                <circle cx="14" cy="13" r="4.25"></circle>
+                <path d="M14 17.25V29"></path>
+                <path d="M14 25.5h4M14 29h3"></path>
+              </g>
+              <g style="opacity:0">
+                <circle cx="7" cy="31.5" r="3.75"></circle>
+                <path d="M10.75 31.5H24"></path>
+                <path d="M19.5 31.5v-3.5M23 31.5V29"></path>
+              </g>
+            </svg>
+            <span class="nd-obj-label" style="position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);font:600 9px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted);white-space:nowrap;pointer-events:none;opacity:1">CONNECT WALLET</span>
+          </span>
+          <span class="nd-obj" title="Tea steams by day" style="position:relative;display:block;color:var(--ink-2)">
+            <svg width="34" height="35" viewBox="0 0 34 35" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <g style="opacity:var(--sun)">
+                <path class="nd-steam" d="M13 12c-1.5-2 1.5-3.5 0-6.5"></path>
+                <path class="nd-steam-b" d="M19 12c-1.5-2 1.5-3.5 0-6.5"></path>
+              </g>
+              <path d="M8 15h18v6c0 4.5-3.5 7-9 7s-9-2.5-9-7Z"></path>
+              <path d="M26 16.5h1.5a3.5 3.5 0 0 1 0 7H25"></path>
+              <path d="M5 33.5h24"></path>
+            </svg>
+          </span>
+        </div>
+      </header>
+      <div style="position:absolute;right:-96px;top:-56px;width:480px;height:480px;pointer-events:none;opacity:var(--pool);background:radial-gradient(closest-side,rgba(255,190,116,.22),rgba(255,190,116,.10) 42%,rgba(255,190,116,0) 72%)"></div>
+      <svg aria-hidden="true" width="104" height="116" viewBox="0 0 104 116" style="position:absolute;right:52px;top:64px;color:var(--ink-2)" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <path d="M32 110h48M44 110v-5h26v5"></path>
+        <path d="M58 105V50"></path>
+        <circle cx="58" cy="48" r="2.5"></circle>
+        <path d="M58 48L38 30"></path>
+        <path d="M16 38L44 12L58 26L30 52Z"></path>
+        <circle cx="30" cy="44" r="4.5" fill="#FFC878" stroke="none" opacity="var(--pool)"></circle>
+      </svg>
+      <button class="nd-chain" onClick="{{ pull }}" aria-label="Pull the lamp chain" style="position:absolute;right:142px;top:0;background:none;border:none;padding:0 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;z-index:3" style-focus="outline:2.5px solid var(--seal);outline-offset:2px">
+        <span class="nd-chain-line" style="display:block;width:1.5px;height:52px;background:#A8895A;transition:height .18s cubic-bezier(.3,1.6,.4,1)"></span>
+        <span style="display:block;width:7px;height:7px;border-radius:50%;background:#A8895A"></span>
+      </button>
+      <main style="display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;padding:48px 40px 40px">
+        <div style="display:flex;flex-direction:column;gap:22px;align-items:flex-start">
+          <h1 style="font-family:var(--font-display);font-weight:400;font-size:60px;line-height:1.05;letter-spacing:-.01em;margin:0">Product name</h1>
+          <p style="font-size:18px;line-height:1.5;color:var(--ink-2);max-width:34em;margin:0">One sentence stating what this app proves without revealing the secret behind it.</p>
+          <x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.SequenceNav" current="{{ minusOne }}" hint-size="360px,20px"></x-import>
+          <span style="margin-top:6px"><x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.Button" size="lg" hint-size="240px,52px">Commit your secret</x-import></span>
+        </div>
+        <div class="nd-sealwrap" style="position:relative;display:flex;justify-content:center">
+          <x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.Seal" mode="embossed" size="{{ sealSize }}" center="UNSTAMPED" hint-size="260px,260px"></x-import>
+          <span class="nd-obj" title="The stamp commits a secret" style="position:absolute;left:calc(50% + 138px);bottom:-6px;display:block;color:var(--ink-2)">
+            <svg width="44" height="58" viewBox="0 0 44 58" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <circle cx="22" cy="8" r="5.25"></circle>
+              <path d="M22 13.25V22"></path>
+              <path d="M11 42c0-9 22-9 22 0"></path>
+              <path d="M8 42.75h28V52H8Z"></path>
+              <path d="M4 57.25h36" stroke="var(--seal)"></path>
+            </svg>
+            <span class="nd-obj-label" style="position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);font:600 9px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted);white-space:nowrap;pointer-events:none">STAMP &middot; COMMIT</span>
+          </span>
+        </div>
+      </main>
+      <section aria-label="Desk stats" style="display:flex;align-items:baseline;margin:0 40px 24px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
+        <span style="display:flex;align-items:baseline;gap:9px;padding:12px 26px 12px 0">
+          <span style="font:400 17px/1 var(--font-mono)">3</span>
+          <span style="font:600 10px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted)">PROOFS RECORDED</span>
+        </span>
+        <span style="display:flex;align-items:baseline;gap:9px;padding:12px 26px;border-left:1px solid var(--rule)">
+          <span style="font:400 17px/1 var(--font-mono)">1</span>
+          <span style="font:600 10px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted)">PENDING</span>
+        </span>
+        <span style="display:flex;align-items:baseline;gap:9px;padding:12px 26px;border-left:1px solid var(--rule)">
+          <span style="font:400 17px/1 var(--font-mono)">7.5 S</span>
+          <span style="font:600 10px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted)">MEAN PROOF TIME</span>
+        </span>
+        <span style="display:flex;align-items:baseline;gap:9px;padding:12px 0 12px 26px;border-left:1px solid var(--rule)">
+          <span style="font:400 17px/1 var(--font-mono);color:var(--ledger-text)">0</span>
+          <span style="font:600 10px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted)">SECRETS ON CHAIN</span>
+        </span>
+      </section>
+      <section aria-label="Register of proofs" style="padding:8px 40px 26px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:10px">
+          <span class="mn-label">Register of proofs</span>
+          <span style="font:400 11px/1 var(--font-mono);letter-spacing:.1em;color:var(--muted)">PUBLIC RECORD &middot; PAGE 07</span>
+        </div>
+        <div style="position:relative">
+          <span aria-hidden="true" style="position:absolute;left:63px;top:0;bottom:0;width:1px;background:var(--seal);opacity:.35;pointer-events:none"></span>
+          <div style="display:grid;grid-template-columns:56px 104px 1fr 148px 132px;gap:16px;padding:0 12px 8px 0;border-bottom:1.5px solid var(--ink);font:600 10px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted)">
+            <span>NO.</span><span>DATE</span><span>FACT PROVED</span><span>TRANSACTION</span><span style="text-align:right">STATUS</span>
+          </div>
+          <sc-for list="{{ entries }}" as="row" hint-placeholder-count="5">
+            <div data-reg-row role="button" tabindex="0" aria-label="Open register entry {{ row.no }}" style="display:grid;grid-template-columns:56px 104px 1fr 148px 132px;gap:16px;align-items:center;padding:11px 12px 11px 0;border-bottom:1px {{ row.divider }} var(--rule);cursor:pointer" style-hover="background:var(--wash)" style-focus="outline:2.5px solid var(--seal);outline-offset:-2px">
+              <span style="font:400 12px/1.4 var(--font-mono);color:var(--muted)">{{ row.no }}</span>
+              <span style="font:400 12px/1.4 var(--font-mono);color:var(--ink-2)">{{ row.date }}</span>
+              <span style="font-size:15px;line-height:1.4">
+                <span style="color:{{ row.factColor }};text-decoration:{{ row.deco }}">{{ row.fact }}</span>
+                <sc-if value="{{ row.hasNote }}" hint-placeholder-val="{{ false }}"><span style="display:block;font-size:12px;color:var(--muted);margin-top:2px">{{ row.note }}</span></sc-if>
+              </span>
+              <span style="font:400 12px/1.4 var(--font-mono);color:{{ row.txColor }}">{{ row.tx }}</span>
+              <span style="display:flex;align-items:center;justify-content:flex-end;gap:7px">
+                <sc-if value="{{ row.ring }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;border:1.5px solid var(--seal);flex:none"></span></sc-if>
+                <span style="font:600 11px/1 var(--font-mono);letter-spacing:.1em;color:{{ row.statusColor }}">{{ row.status }}</span>
+              </span>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+      <section aria-label="How it works" style="margin:0 40px;border-top:1px solid var(--rule);padding:22px 0 40px">
+        <span class="mn-label">How it works</span>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:16px">
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <span style="font:600 12px/1 var(--font-mono);color:var(--seal)">01</span>
+            <h3 style="font-family:var(--font-display);font-weight:400;font-size:21px;line-height:1.2;margin:0">Commit</h3>
+            <p style="margin:0;font-size:14px;line-height:1.5;color:var(--ink-2)">Type the secret. It never leaves this window.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <span style="font:600 12px/1 var(--font-mono);color:var(--seal)">02</span>
+            <h3 style="font-family:var(--font-display);font-weight:400;font-size:21px;line-height:1.2;margin:0">Prove</h3>
+            <p style="margin:0;font-size:14px;line-height:1.5;color:var(--ink-2)">Your browser builds a proof that the claim is true.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <span style="font:600 12px/1 var(--font-mono);color:var(--seal)">03</span>
+            <h3 style="font-family:var(--font-display);font-weight:400;font-size:21px;line-height:1.2;margin:0">Record</h3>
+            <p style="margin:0;font-size:14px;line-height:1.5;color:var(--ink-2)">Only the proof is stamped into the public register.</p>
+          </div>
+        </div>
+      </section>
+      <footer style="position:relative;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 40px;border-top:1px solid var(--rule)">
+        <span style="font-size:14px;color:var(--ink-2)">Proofs are verified on chain. Secrets stay on this device.</span>
+        <span style="font:600 11px/1 var(--font-mono);letter-spacing:.12em;color:var(--ledger-text);background:var(--wash);border:1px solid var(--ledger);border-radius:2px;padding:4px 7px;opacity:.75">PRIVATE BY DEFAULT</span>
+        <span style="position:absolute;left:50%;bottom:0;transform:translateX(-50%)">
+          <span class="nd-obj" title="The desk drawer holds docs and settings" style="position:relative;display:block;color:var(--ink-2)">
+            <svg style="display:block" width="68" height="19" viewBox="0 0 68 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M2.75 19V2.75h62.5V19"></path>
+              <path d="M26 10h16"></path>
+            </svg>
+            <span class="nd-obj-label" style="position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);font:600 9px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted);white-space:nowrap;pointer-events:none">DOCS &amp; SETTINGS</span>
+          </span>
+        </span>
+      </footer>
+    </div>
+  </div>
+  <div id="1b" style="display:flex;flex-direction:column;gap:14px">
+    <span style="font:600 12px/1 var(--font-mono);letter-spacing:.14em;color:#F4EFE4;opacity:.7">1b &middot; NIGHT</span>
+    <div data-card data-mode="night" data-screen-label="Landing NIGHT" style="position:relative;width:1020px;background:var(--card-surface);box-shadow:var(--card-shadow);border:1px solid var(--edge);font-family:var(--font-body);color:var(--ink)">
+      <header style="display:flex;justify-content:space-between;align-items:center;gap:24px;padding:18px 40px;border-bottom:1.5px solid var(--ink)">
+        <span class="mn-label" style="white-space:nowrap">Runs on Midnight</span>
+        <div style="display:flex;align-items:flex-end;gap:22px;align-self:flex-end;margin-bottom:-18px;margin-right:132px">
+          <span class="nd-obj" title="The ledger opens the register" style="position:relative;display:block;color:var(--ink-2)">
+            <svg width="20" height="36" viewBox="0 0 20 36" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3.25" y="2.75" width="13.5" height="32.5"></rect>
+              <path d="M3.25 8h13.5M3.25 30.5h13.5"></path>
+              <path d="M13.5 2.75v4.5" stroke="var(--seal)"></path>
+            </svg>
+            <span class="nd-obj-label" style="position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);font:600 9px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted);white-space:nowrap;pointer-events:none">REGISTER</span>
+          </span>
+          <span class="nd-obj" title="The loupe opens verify" style="position:relative;display:block;color:var(--ink-2)">
+            <svg width="30" height="35" viewBox="0 0 30 35" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <circle cx="12" cy="12" r="8.25"></circle>
+              <path d="M18 18l8.5 15"></path>
+            </svg>
+            <span class="nd-obj-label" style="position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);font:600 9px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted);white-space:nowrap;pointer-events:none">VERIFY</span>
+          </span>
+          <span class="nd-obj" title="The inkwell. Ink is ready once a wallet is connected" style="position:relative;display:block;color:var(--ink-2)">
+            <svg width="46" height="35" viewBox="0 0 46 35" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M10 33.5L11.5 21h11L24 33.5Z"></path>
+              <path d="M14 21v-4.5h6V21"></path>
+              <g style="opacity:1"><path d="M29 33h15"></path><path d="M29 33l-3.5-1.2"></path></g>
+              <g style="opacity:0"><path d="M17 17.5L31 3.5"></path><path d="M27.5 7l3 3"></path></g>
+            </svg>
+            <span class="nd-obj-label" style="position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);font:600 9px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted);white-space:nowrap;pointer-events:none">INK DRY</span>
+          </span>
+          <span class="nd-obj" title="The key connects a wallet" style="position:relative;display:block;color:var(--ink-2)">
+            <svg width="28" height="36" viewBox="0 0 28 36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <circle cx="14" cy="4" r="1.4"></circle>
+              <path d="M14 5.5v3"></path>
+              <g style="opacity:1">
+                <circle cx="14" cy="13" r="4.25"></circle>
+                <path d="M14 17.25V29"></path>
+                <path d="M14 25.5h4M14 29h3"></path>
+              </g>
+              <g style="opacity:0">
+                <circle cx="7" cy="31.5" r="3.75"></circle>
+                <path d="M10.75 31.5H24"></path>
+                <path d="M19.5 31.5v-3.5M23 31.5V29"></path>
+              </g>
+            </svg>
+            <span class="nd-obj-label" style="position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);font:600 9px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted);white-space:nowrap;pointer-events:none;opacity:1">CONNECT WALLET</span>
+          </span>
+          <span class="nd-obj" title="Tea steams by day" style="position:relative;display:block;color:var(--ink-2)">
+            <svg width="34" height="35" viewBox="0 0 34 35" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <g style="opacity:var(--sun)">
+                <path class="nd-steam" d="M13 12c-1.5-2 1.5-3.5 0-6.5"></path>
+                <path class="nd-steam-b" d="M19 12c-1.5-2 1.5-3.5 0-6.5"></path>
+              </g>
+              <path d="M8 15h18v6c0 4.5-3.5 7-9 7s-9-2.5-9-7Z"></path>
+              <path d="M26 16.5h1.5a3.5 3.5 0 0 1 0 7H25"></path>
+              <path d="M5 33.5h24"></path>
+            </svg>
+          </span>
+        </div>
+      </header>
+      <div style="position:absolute;right:-96px;top:-56px;width:480px;height:480px;pointer-events:none;opacity:var(--pool);background:radial-gradient(closest-side,rgba(255,190,116,.22),rgba(255,190,116,.10) 42%,rgba(255,190,116,0) 72%)"></div>
+      <svg aria-hidden="true" width="104" height="116" viewBox="0 0 104 116" style="position:absolute;right:52px;top:64px;color:var(--ink-2)" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <path d="M32 110h48M44 110v-5h26v5"></path>
+        <path d="M58 105V50"></path>
+        <circle cx="58" cy="48" r="2.5"></circle>
+        <path d="M58 48L38 30"></path>
+        <path d="M16 38L44 12L58 26L30 52Z"></path>
+        <circle cx="30" cy="44" r="4.5" fill="#FFC878" stroke="none" opacity="var(--pool)"></circle>
+      </svg>
+      <button class="nd-chain" onClick="{{ pull }}" aria-label="Pull the lamp chain" style="position:absolute;right:142px;top:0;background:none;border:none;padding:0 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;z-index:3" style-focus="outline:2.5px solid var(--seal);outline-offset:2px">
+        <span class="nd-chain-line" style="display:block;width:1.5px;height:52px;background:#A8895A;transition:height .18s cubic-bezier(.3,1.6,.4,1)"></span>
+        <span style="display:block;width:7px;height:7px;border-radius:50%;background:#A8895A"></span>
+      </button>
+      <main style="display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;padding:48px 40px 40px">
+        <div style="display:flex;flex-direction:column;gap:22px;align-items:flex-start">
+          <h1 style="font-family:var(--font-display);font-weight:400;font-size:60px;line-height:1.05;letter-spacing:-.01em;margin:0">Product name</h1>
+          <p style="font-size:18px;line-height:1.5;color:var(--ink-2);max-width:34em;margin:0">One sentence stating what this app proves without revealing the secret behind it.</p>
+          <x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.SequenceNav" current="{{ minusOne }}" hint-size="360px,20px"></x-import>
+          <span style="margin-top:6px"><x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.Button" size="lg" hint-size="240px,52px">Commit your secret</x-import></span>
+        </div>
+        <div class="nd-sealwrap" style="position:relative;display:flex;justify-content:center">
+          <x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.Seal" mode="embossed" size="{{ sealSize }}" center="UNSTAMPED" hint-size="260px,260px"></x-import>
+          <span class="nd-obj" title="The stamp commits a secret" style="position:absolute;left:calc(50% + 138px);bottom:-6px;display:block;color:var(--ink-2)">
+            <svg width="44" height="58" viewBox="0 0 44 58" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <circle cx="22" cy="8" r="5.25"></circle>
+              <path d="M22 13.25V22"></path>
+              <path d="M11 42c0-9 22-9 22 0"></path>
+              <path d="M8 42.75h28V52H8Z"></path>
+              <path d="M4 57.25h36" stroke="var(--seal)"></path>
+            </svg>
+            <span class="nd-obj-label" style="position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);font:600 9px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted);white-space:nowrap;pointer-events:none">STAMP &middot; COMMIT</span>
+          </span>
+        </div>
+      </main>
+      <section aria-label="Desk stats" style="display:flex;align-items:baseline;margin:0 40px 24px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
+        <span style="display:flex;align-items:baseline;gap:9px;padding:12px 26px 12px 0">
+          <span style="font:400 17px/1 var(--font-mono)">3</span>
+          <span style="font:600 10px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted)">PROOFS RECORDED</span>
+        </span>
+        <span style="display:flex;align-items:baseline;gap:9px;padding:12px 26px;border-left:1px solid var(--rule)">
+          <span style="font:400 17px/1 var(--font-mono)">1</span>
+          <span style="font:600 10px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted)">PENDING</span>
+        </span>
+        <span style="display:flex;align-items:baseline;gap:9px;padding:12px 26px;border-left:1px solid var(--rule)">
+          <span style="font:400 17px/1 var(--font-mono)">7.5 S</span>
+          <span style="font:600 10px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted)">MEAN PROOF TIME</span>
+        </span>
+        <span style="display:flex;align-items:baseline;gap:9px;padding:12px 0 12px 26px;border-left:1px solid var(--rule)">
+          <span style="font:400 17px/1 var(--font-mono);color:var(--ledger-text)">0</span>
+          <span style="font:600 10px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted)">SECRETS ON CHAIN</span>
+        </span>
+      </section>
+      <section aria-label="Register of proofs" style="padding:8px 40px 26px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:10px">
+          <span class="mn-label">Register of proofs</span>
+          <span style="font:400 11px/1 var(--font-mono);letter-spacing:.1em;color:var(--muted)">PUBLIC RECORD &middot; PAGE 07</span>
+        </div>
+        <div style="position:relative">
+          <span aria-hidden="true" style="position:absolute;left:63px;top:0;bottom:0;width:1px;background:var(--seal);opacity:.35;pointer-events:none"></span>
+          <div style="display:grid;grid-template-columns:56px 104px 1fr 148px 132px;gap:16px;padding:0 12px 8px 0;border-bottom:1.5px solid var(--ink);font:600 10px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted)">
+            <span>NO.</span><span>DATE</span><span>FACT PROVED</span><span>TRANSACTION</span><span style="text-align:right">STATUS</span>
+          </div>
+          <sc-for list="{{ entries }}" as="row" hint-placeholder-count="5">
+            <div data-reg-row role="button" tabindex="0" aria-label="Open register entry {{ row.no }}" style="display:grid;grid-template-columns:56px 104px 1fr 148px 132px;gap:16px;align-items:center;padding:11px 12px 11px 0;border-bottom:1px {{ row.divider }} var(--rule);cursor:pointer" style-hover="background:var(--wash)" style-focus="outline:2.5px solid var(--seal);outline-offset:-2px">
+              <span style="font:400 12px/1.4 var(--font-mono);color:var(--muted)">{{ row.no }}</span>
+              <span style="font:400 12px/1.4 var(--font-mono);color:var(--ink-2)">{{ row.date }}</span>
+              <span style="font-size:15px;line-height:1.4">
+                <span style="color:{{ row.factColor }};text-decoration:{{ row.deco }}">{{ row.fact }}</span>
+                <sc-if value="{{ row.hasNote }}" hint-placeholder-val="{{ false }}"><span style="display:block;font-size:12px;color:var(--muted);margin-top:2px">{{ row.note }}</span></sc-if>
+              </span>
+              <span style="font:400 12px/1.4 var(--font-mono);color:{{ row.txColor }}">{{ row.tx }}</span>
+              <span style="display:flex;align-items:center;justify-content:flex-end;gap:7px">
+                <sc-if value="{{ row.ring }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;border:1.5px solid var(--seal);flex:none"></span></sc-if>
+                <span style="font:600 11px/1 var(--font-mono);letter-spacing:.1em;color:{{ row.statusColor }}">{{ row.status }}</span>
+              </span>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+      <section aria-label="How it works" style="margin:0 40px;border-top:1px solid var(--rule);padding:22px 0 40px">
+        <span class="mn-label">How it works</span>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:16px">
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <span style="font:600 12px/1 var(--font-mono);color:var(--seal)">01</span>
+            <h3 style="font-family:var(--font-display);font-weight:400;font-size:21px;line-height:1.2;margin:0">Commit</h3>
+            <p style="margin:0;font-size:14px;line-height:1.5;color:var(--ink-2)">Type the secret. It never leaves this window.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <span style="font:600 12px/1 var(--font-mono);color:var(--seal)">02</span>
+            <h3 style="font-family:var(--font-display);font-weight:400;font-size:21px;line-height:1.2;margin:0">Prove</h3>
+            <p style="margin:0;font-size:14px;line-height:1.5;color:var(--ink-2)">Your browser builds a proof that the claim is true.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <span style="font:600 12px/1 var(--font-mono);color:var(--seal)">03</span>
+            <h3 style="font-family:var(--font-display);font-weight:400;font-size:21px;line-height:1.2;margin:0">Record</h3>
+            <p style="margin:0;font-size:14px;line-height:1.5;color:var(--ink-2)">Only the proof is stamped into the public register.</p>
+          </div>
+        </div>
+      </section>
+      <footer style="position:relative;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 40px;border-top:1px solid var(--rule)">
+        <span style="font-size:14px;color:var(--ink-2)">Proofs are verified on chain. Secrets stay on this device.</span>
+        <span style="font:600 11px/1 var(--font-mono);letter-spacing:.12em;color:var(--ledger-text);background:var(--wash);border:1px solid var(--ledger);border-radius:2px;padding:4px 7px;opacity:.75">PRIVATE BY DEFAULT</span>
+        <span style="position:absolute;left:50%;bottom:0;transform:translateX(-50%)">
+          <span class="nd-obj" title="The desk drawer holds docs and settings" style="position:relative;display:block;color:var(--ink-2)">
+            <svg style="display:block" width="68" height="19" viewBox="0 0 68 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M2.75 19V2.75h62.5V19"></path>
+              <path d="M26 10h16"></path>
+            </svg>
+            <span class="nd-obj-label" style="position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);font:600 9px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted);white-space:nowrap;pointer-events:none">DOCS &amp; SETTINGS</span>
+          </span>
+        </span>
+      </footer>
+    </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;transitionMs&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:800,&quot;min&quot;:150,&quot;max&quot;:900,&quot;step&quot;:50,&quot;unit&quot;:&quot;ms&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;syncPull&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+class Component extends DCLogic {
+  componentDidMount(){ this.applyDur(); }
+  componentDidUpdate(){ this.applyDur(); }
+  applyDur(){
+    const ms = this.props.transitionMs ?? 400;
+    document.documentElement.style.setProperty('--nd-dur', (ms/1000)+'s');
+  }
+  renderVals(){
+    return {
+      falseVal: false,
+      minusOne: -1,
+      sealSize: 260,
+      entries: [
+        {no:'0048', date:'14 Jul 2026', fact:'Balance above stated threshold', factColor:'var(--ink)', deco:'none', hasNote:false, note:'', tx:'\u2026', txColor:'var(--muted)', status:'PENDING', statusColor:'var(--muted)', ring:false, divider:'dashed'},
+        {no:'0047', date:'12 Jul 2026', fact:'Membership in contributor set', factColor:'var(--ink)', deco:'none', hasNote:false, note:'', tx:'8f3a4c\u2026c21e', txColor:'var(--ink-2)', status:'RECORDED', statusColor:'var(--ink)', ring:true, divider:'solid'},
+        {no:'0046', date:'08 Jul 2026', fact:'Age over eighteen', factColor:'var(--ink)', deco:'none', hasNote:false, note:'', tx:'d90b17\u202644aa', txColor:'var(--ink-2)', status:'RECORDED', statusColor:'var(--ink)', ring:true, divider:'solid'},
+        {no:'0045', date:'03 Jul 2026', fact:'Escrow account solvency', factColor:'var(--ink)', deco:'none', hasNote:false, note:'', tx:'21c8e0\u20269f3b', txColor:'var(--ink-2)', status:'RECORDED', statusColor:'var(--ink)', ring:true, divider:'solid'},
+        {no:'0044', date:'27 Jun 2026', fact:'Age over eighteen', factColor:'var(--muted)', deco:'line-through', hasNote:true, note:'Reissued as no. 0046', tx:'77b2d4\u20260e6c', txColor:'var(--muted)', status:'VOID', statusColor:'var(--muted)', ring:false, divider:'solid'},
+      ],
+      pull: (e) => {
+        const btn = e.currentTarget;
+        const card = btn.closest('[data-card]');
+        const next = card.getAttribute('data-mode') === 'day' ? 'night' : 'day';
+        const targets = (this.props.syncPull ?? false) ? document.querySelectorAll('[data-card]') : [card];
+        targets.forEach(c => c.setAttribute('data-mode', c === card ? next : (c.getAttribute('data-mode') === 'day' ? 'night' : 'day')));
+        btn.classList.remove('nd-tug'); void btn.offsetWidth; btn.classList.add('nd-tug');
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

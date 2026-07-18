@@ -1,0 +1,245 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "components/actions/**",
+              "components/forms/**",
+              "components/proof/**",
+              "ui_kits/app/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Libre Caslon Text|Public Sans|IBM Plex Mono))/i]",
+        "message": "Font not provided by the design system. Available: Libre Caslon Text, Public Sans, IBM Plex Mono."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute > JSXIdentifier[name!=/^(?:variant|size|disabled|onClick|children|key|ref|className|style|children)$/]",
+        "message": "<Button> doesn't accept that prop. Declared props: variant, size, disabled, onClick, children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:primary|secondary|paper|ghost)$/]",
+        "message": "<Button> variant must be one of 'primary' | 'secondary' | 'paper' | 'ghost'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute[name.name='size'] > Literal[value!=/^(?:md|lg)$/]",
+        "message": "<Button> size must be one of 'md' | 'lg'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Input'] > JSXAttribute > JSXIdentifier[name!=/^(?:label|note|privacy|placeholder|value|onChange|key|ref|className|style|children)$/]",
+        "message": "<Input> doesn't accept that prop. Declared props: label, note, privacy, placeholder, value, onChange."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Input'] > JSXAttribute[name.name='privacy'] > Literal[value!=/^(?:private)$/]",
+        "message": "<Input> privacy must be one of 'private'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='LedgerRow'] > JSXAttribute > JSXIdentifier[name!=/^(?:label|value|mono|key|ref|className|style|children)$/]",
+        "message": "<LedgerRow> doesn't accept that prop. Declared props: label, value, mono."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Seal'] > JSXAttribute > JSXIdentifier[name!=/^(?:mode|size|ring|center|duration|key|ref|className|style|children)$/]",
+        "message": "<Seal> doesn't accept that prop. Declared props: mode, size, ring, center, duration."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Seal'] > JSXAttribute[name.name='mode'] > Literal[value!=/^(?:embossed|drawing|stamped)$/]",
+        "message": "<Seal> mode must be one of 'embossed' | 'drawing' | 'stamped'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='SequenceNav'] > JSXAttribute > JSXIdentifier[name!=/^(?:steps|current|key|ref|className|style|children)$/]",
+        "message": "<SequenceNav> doesn't accept that prop. Declared props: steps, current."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Status'] > JSXAttribute > JSXIdentifier[name!=/^(?:kind|children|key|ref|className|style|children)$/]",
+        "message": "<Status> doesn't accept that prop. Declared props: kind, children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Status'] > JSXAttribute[name.name='kind'] > Literal[value!=/^(?:recorded|pending|void)$/]",
+        "message": "<Status> kind must be one of 'recorded' | 'pending' | 'void'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='WalletChip'] > JSXAttribute > JSXIdentifier[name!=/^(?:connected|address|onClick|key|ref|className|style|children)$/]",
+        "message": "<WalletChip> doesn't accept that prop. Declared props: connected, address, onClick."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {
+      "Button": {
+        "replaces": []
+      },
+      "Input": {
+        "replaces": []
+      },
+      "LedgerRow": {
+        "replaces": []
+      },
+      "Seal": {
+        "replaces": []
+      },
+      "SequenceNav": {
+        "replaces": []
+      },
+      "Status": {
+        "replaces": []
+      },
+      "WalletChip": {
+        "replaces": []
+      }
+    },
+    "tokens": [
+      "--accent-action",
+      "--bone",
+      "--border-rule",
+      "--border-strong",
+      "--desk",
+      "--doc-shadow",
+      "--font-body",
+      "--font-display",
+      "--font-mono",
+      "--ink",
+      "--ink-2",
+      "--leading-body",
+      "--leading-tight",
+      "--ledger",
+      "--ledger-press",
+      "--measure",
+      "--muted",
+      "--paper",
+      "--radius-doc",
+      "--radius-plate",
+      "--rule",
+      "--rule-w",
+      "--seal",
+      "--seal-press",
+      "--sp-1",
+      "--sp-2",
+      "--sp-3",
+      "--sp-4",
+      "--sp-5",
+      "--sp-6",
+      "--sp-7",
+      "--sp-8",
+      "--sp-9",
+      "--status-recorded",
+      "--status-void",
+      "--surface-desk",
+      "--surface-page",
+      "--surface-private",
+      "--surface-recessed",
+      "--text-2xl",
+      "--text-3xl",
+      "--text-body",
+      "--text-label",
+      "--text-lg",
+      "--text-md",
+      "--text-muted",
+      "--text-on-desk",
+      "--text-on-private",
+      "--text-secondary",
+      "--text-sm",
+      "--text-xl",
+      "--track-label",
+      "--track-wide",
+      "--wash"
+    ],
+    "tokenKinds": {
+      "--desk": "color",
+      "--bone": "color",
+      "--paper": "color",
+      "--ink": "color",
+      "--seal": "color",
+      "--ledger": "color",
+      "--wash": "color",
+      "--rule": "color",
+      "--ink-2": "color",
+      "--muted": "color",
+      "--seal-press": "color",
+      "--ledger-press": "color",
+      "--doc-shadow": "shadow",
+      "--surface-page": "color",
+      "--surface-desk": "color",
+      "--surface-recessed": "color",
+      "--surface-private": "color",
+      "--text-body": "font",
+      "--text-secondary": "font",
+      "--text-muted": "font",
+      "--text-on-private": "font",
+      "--text-on-desk": "font",
+      "--accent-action": "color",
+      "--border-rule": "color",
+      "--border-strong": "color",
+      "--status-recorded": "color",
+      "--status-void": "color",
+      "--font-display": "font",
+      "--font-body": "font",
+      "--font-mono": "font",
+      "--text-label": "font",
+      "--text-sm": "font",
+      "--text-md": "font",
+      "--text-lg": "font",
+      "--text-xl": "font",
+      "--text-2xl": "font",
+      "--text-3xl": "font",
+      "--track-label": "spacing",
+      "--track-wide": "spacing",
+      "--leading-tight": "font",
+      "--leading-body": "font",
+      "--sp-1": "spacing",
+      "--sp-2": "spacing",
+      "--sp-3": "spacing",
+      "--sp-4": "spacing",
+      "--sp-5": "spacing",
+      "--sp-6": "spacing",
+      "--sp-7": "spacing",
+      "--sp-8": "spacing",
+      "--sp-9": "spacing",
+      "--radius-doc": "radius",
+      "--radius-plate": "radius",
+      "--rule-w": "spacing",
+      "--measure": "spacing"
+    },
+    "fontFamilies": [
+      "IBM Plex Mono",
+      "Libre Caslon Text",
+      "Public Sans"
+    ]
+  }
+}

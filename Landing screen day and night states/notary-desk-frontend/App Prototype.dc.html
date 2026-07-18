@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/notary-desk-design-system-b9034183-23d5-457d-97f4-53be9fc253ad/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/notary-desk-design-system-b9034183-23d5-457d-97f4-53be9fc253ad/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/notary-desk-design-system-b9034183-23d5-457d-97f4-53be9fc253ad/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/notary-desk-design-system-b9034183-23d5-457d-97f4-53be9fc253ad/tokens/base.css">
+  <link rel="stylesheet" href="_ds/notary-desk-design-system-b9034183-23d5-457d-97f4-53be9fc253ad/tokens/components.css">
+  <script src="_ds/notary-desk-design-system-b9034183-23d5-457d-97f4-53be9fc253ad/_ds_bundle.js"></script>
+  <style>
+    body{background:#191512;margin:0}
+    a{color:#F4EFE4}a:hover{color:#C9C2B6}
+    /* night is the default; day is the override */
+    [data-card]{--card-surface:#211D1A;--paper:#282320;--ink:#F8F7F3;--ink-2:rgba(248,247,243,.72);--muted:rgba(248,247,243,.48);--wash:rgba(248,247,243,.07);--rule:rgba(248,247,243,.26);--seal:#9C3A2C;--seal-press:#7C2C21;--ledger:#22362D;--ledger-text:rgba(196,216,203,.85);--pool:1;--night:1;--day:0;--steam:#FFBE74;--coffee:#E8A85C}
+    [data-card][data-mode="day"]{--card-surface:#F8F7F3;--paper:#F8F7F3;--ink:#211D1A;--ink-2:#4A443C;--muted:#6B6459;--wash:#EBE5D8;--rule:#C9C2B6;--seal:#872A21;--seal-press:#6E1F18;--ledger:#2E4A3F;--ledger-text:#2E4A3F;--pool:0;--night:0;--day:1;--steam:#B06F35;--coffee:#C98A45}
+    [data-card],[data-card] *{transition:background-color var(--nd-dur,.4s) ease,color var(--nd-dur,.4s) ease,border-color var(--nd-dur,.4s) ease,box-shadow var(--nd-dur,.4s) ease,opacity var(--nd-dur,.4s) ease}
+    [data-card] svg *{transition:stroke var(--nd-dur,.4s) ease,fill var(--nd-dur,.4s) ease,opacity var(--nd-dur,.4s) ease}
+    [data-card] [data-reg-row]{transition:background-color .12s ease,color var(--nd-dur,.4s) ease,border-color var(--nd-dur,.4s) ease}
+    [data-card] .mn-btn{white-space:nowrap}
+    [data-card] .mn-chip{white-space:nowrap}
+    [data-card]:not([data-mode="day"]) .mn-btn--primary{color:#F4EFE4}
+    [data-card] .mn-tag-private{background:#345248;color:#F4EFE4}
+    [data-card]:not([data-mode="day"]) .mn-tag-private{background:#2E4A3F;color:#F4EFE4}
+    [data-card]:not([data-mode="day"]) .mn-ledger__col--private{color:rgba(248,247,243,.92)}
+    [data-card] .nd-sealwrap .mn-seal--embossed{color:var(--seal)}
+    .nd-chain:hover .nd-chain-line{height:64px}
+    .nd-tug{animation:nd-tug .3s ease}
+    @keyframes nd-tug{0%{transform:translateY(0)}45%{transform:translateY(6px)}100%{transform:translateY(0)}}
+    .nd-obj{-webkit-tap-highlight-color:transparent}
+    .nd-obj:active{transform:translateY(1px)}
+    .nd-obj .nd-obj-label{opacity:0;transition:opacity .15s ease}
+    .nd-obj:hover .nd-obj-label,.nd-obj:focus-visible .nd-obj-label{opacity:1}
+    .nd-steam{animation:nd-steam 2.6s ease-in-out infinite}
+    .nd-steam-b{animation:nd-steam 2.6s ease-in-out .9s infinite}
+    .nd-steam-c{animation:nd-steam 2.6s ease-in-out 1.7s infinite}
+    @keyframes nd-steam{0%{transform:translateY(4px);opacity:0}25%{opacity:.95}55%{opacity:.55}100%{transform:translateY(-11px);opacity:0}}
+    @media (prefers-reduced-motion:reduce){[data-card],[data-card] *,[data-card] svg *{transition:none}.nd-tug{animation:none}.nd-steam,.nd-steam-b,.nd-steam-c{animation:none}}
+  </style>
+</helmet>
+<div style="min-height:100vh;display:flex;justify-content:center;align-items:flex-start;padding:40px 32px">
+  <x-import component-from-global-scope="ChromeWindow" from="./browser-window.jsx" width="{{ winW }}" height="{{ winH }}" url="app.midnight.example" hint-size="1440px,920px">
+    <div data-card data-mode="{{ mode }}" style="position:relative;height:100%;display:flex;flex-direction:column;background:var(--card-surface);color:var(--ink);font-family:var(--font-body);overflow:hidden">
+      <div style="position:absolute;right:-96px;top:-64px;width:520px;height:520px;pointer-events:none;opacity:var(--pool);background:radial-gradient(closest-side,rgba(255,190,116,.22),rgba(255,190,116,.10) 42%,rgba(255,190,116,0) 72%);z-index:1"></div>
+      <header style="position:relative;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:16px 176px 16px 40px;border-bottom:1.5px solid var(--ink);z-index:2">
+        <div style="display:flex;align-items:baseline;gap:28px;min-width:0">
+          <span style="font-family:var(--font-display);font-size:21px;line-height:1;white-space:nowrap">Product name</span>
+          <nav style="display:flex;gap:20px">
+            <button onClick="{{ navDesk }}" style="background:none;border:none;padding:6px 2px;cursor:pointer;font:600 12px/1 var(--font-mono);letter-spacing:.12em;color:{{ deskColor }};border-bottom:1.5px solid {{ deskLine }}" style-focus="outline:2.5px solid var(--seal);outline-offset:2px">DESK</button>
+            <button onClick="{{ navRegister }}" style="background:none;border:none;padding:6px 2px;cursor:pointer;font:600 12px/1 var(--font-mono);letter-spacing:.12em;color:{{ regColor }};border-bottom:1.5px solid {{ regLine }}" style-focus="outline:2.5px solid var(--seal);outline-offset:2px">REGISTER</button>
+            <button onClick="{{ navVerify }}" style="background:none;border:none;padding:6px 2px;cursor:pointer;font:600 12px/1 var(--font-mono);letter-spacing:.12em;color:{{ verColor }};border-bottom:1.5px solid {{ verLine }}" style-focus="outline:2.5px solid var(--seal);outline-offset:2px">VERIFY</button>
+          </nav>
+        </div>
+        <span style="display:block;flex:none"><x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.WalletChip" connected="{{ connected }}" onClick="{{ toggleWallet }}" hint-size="160px,34px"></x-import></span>
+      </header>
+      <svg aria-hidden="true" width="92" height="102" viewBox="0 0 104 116" style="position:absolute;right:48px;top:70px;color:var(--ink-2);z-index:2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <path d="M32 110h48M44 110v-5h26v5"></path>
+        <path d="M58 105V50"></path>
+        <circle cx="58" cy="48" r="2.5"></circle>
+        <path d="M58 48L38 30"></path>
+        <path d="M16 38L44 12L58 26L30 52Z"></path>
+        <circle cx="30" cy="44" r="4.5" fill="#FFC878" stroke="none" opacity="var(--pool)"></circle>
+      </svg>
+      <button class="nd-chain" onClick="{{ pull }}" aria-label="Pull the lamp chain to switch between day and night" style="position:absolute;right:130px;top:0;background:none;border:none;padding:0 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;z-index:3" style-focus="outline:2.5px solid var(--seal);outline-offset:2px">
+        <span class="nd-chain-line" style="display:block;width:1.5px;height:58px;background:#A8895A;transition:height .18s cubic-bezier(.3,1.6,.4,1)"></span>
+        <span style="display:block;width:7px;height:7px;border-radius:50%;background:#A8895A"></span>
+        <span style="position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);font:600 9px/1 var(--font-mono);letter-spacing:.14em;color:var(--muted);white-space:nowrap;pointer-events:none">PULL &middot; {{ chainLabel }}</span>
+      </button>
+      <div style="flex:1;overflow:auto;position:relative">
+        <sc-if value="{{ onLanding }}" hint-placeholder-val="{{ true }}">
+          <main data-screen-label="Desk" style="display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;padding:44px 40px 8px">
+            <div style="display:flex;flex-direction:column;gap:22px;align-items:flex-start">
+              <h1 style="font-family:var(--font-display);font-weight:400;font-size:56px;line-height:1.05;letter-spacing:-.01em;margin:0">Product name</h1>
+              <p style="font-size:18px;line-height:1.5;color:var(--ink-2);max-width:34em;margin:0">One sentence stating what this app proves without revealing the secret behind it.</p>
+              <x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.SequenceNav" current="{{ minusOne }}" hint-size="360px,20px"></x-import>
+              <sc-if value="{{ hasLandingError }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:14px;color:var(--seal)">{{ landingError }}</p></sc-if>
+              <span style="margin-top:6px"><x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.Button" size="lg" onClick="{{ goCommit }}" hint-size="240px,52px">Commit your secret</x-import></span>
+            </div>
+            <div class="nd-sealwrap" style="display:flex;justify-content:center;align-items:flex-end;flex-wrap:wrap;gap:8px 24px">
+              <x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.Seal" mode="embossed" size="{{ sealSize }}" center="UNSTAMPED" hint-size="240px,240px"></x-import>
+              <span title="Coffee by night, tea by day" style="color:var(--ink-2);display:block;flex:none">
+                <svg role="img" aria-label="Coffee steams by night, tea by day" width="94" height="100" viewBox="0 0 94 100" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                  <g stroke="var(--steam)" stroke-width="2">
+                    <path class="nd-steam" d="M31 34c-3.5-5 3.5-8 0-15"></path>
+                    <path class="nd-steam-b" d="M43 36c-3.5-6 3.5-10 0-18"></path>
+                    <g style="opacity:var(--night)"><path class="nd-steam-c" d="M55 34c-3.5-5 3.5-8 0-15"></path></g>
+                  </g>
+                  <ellipse cx="43" cy="46" rx="19.5" ry="3.4" fill="var(--coffee)" stroke="none"></ellipse>
+                  <path d="M19 46h48v9c0 13-10 21-24 21s-24-8-24-21z"></path>
+                  <path d="M67 50h3.5a9.5 9.5 0 0 1 0 19h-5.5"></path>
+                  <g style="opacity:var(--day)">
+                    <path d="M28 45c-2 3-5.5 5-6.5 9"></path>
+                    <rect x="15.5" y="54" width="11.5" height="13.5" fill="var(--card-surface)"></rect>
+                    <path d="M18.5 58.5h5.5"></path>
+                  </g>
+                  <path d="M82 87a5 5 0 1 0 4 8" style="opacity:var(--night)" stroke="var(--coffee)"></path>
+                  <path d="M12 84h62M31 90h24"></path>
+                </svg>
+              </span>
+            </div>
+          </main>
+          <section aria-label="Desk stats" style="display:flex;align-items:baseline;margin:28px 40px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
+            <span style="display:flex;align-items:baseline;gap:9px;padding:12px 26px 12px 0">
+              <span style="font:400 17px/1 var(--font-mono)">{{ statProofs }}</span>
+              <span style="font:600 10px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted)">PROOFS RECORDED</span>
+            </span>
+            <span style="display:flex;align-items:baseline;gap:9px;padding:12px 26px;border-left:1px solid var(--rule)">
+              <span style="font:400 17px/1 var(--font-mono)">{{ statPending }}</span>
+              <span style="font:600 10px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted)">PENDING</span>
+            </span>
+            <span style="display:flex;align-items:baseline;gap:9px;padding:12px 26px;border-left:1px solid var(--rule)">
+              <span style="font:400 17px/1 var(--font-mono)">{{ meanProof }} S</span>
+              <span style="font:600 10px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted)">MEAN PROOF TIME</span>
+            </span>
+            <span style="display:flex;align-items:baseline;gap:9px;padding:12px 0 12px 26px;border-left:1px solid var(--rule)">
+              <span style="font:400 17px/1 var(--font-mono);color:var(--ledger-text)">0</span>
+              <span style="font:600 10px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted)">SECRETS ON CHAIN</span>
+            </span>
+          </section>
+          <section aria-label="Register of proofs" style="padding:20px 40px 24px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:10px">
+              <span class="mn-label">Register of proofs</span>
+              <button onClick="{{ navRegister }}" style="background:none;border:none;padding:0;cursor:pointer;font:400 11px/1 var(--font-mono);letter-spacing:.1em;color:var(--muted);text-decoration:underline" style-hover="color:var(--ink-2)" style-focus="outline:2.5px solid var(--seal);outline-offset:2px">OPEN THE FULL REGISTER</button>
+            </div>
+            <div style="position:relative">
+              <span aria-hidden="true" style="position:absolute;left:63px;top:0;bottom:0;width:1px;background:var(--seal);opacity:.35;pointer-events:none"></span>
+              <div style="display:grid;grid-template-columns:56px 104px 1fr 168px 132px;gap:16px;padding:0 12px 8px 0;border-bottom:1.5px solid var(--ink);font:600 10px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted)">
+                <span>NO.</span><span>DATE</span><span>FACT PROVED</span><span>TRANSACTION</span><span style="text-align:right">STATUS</span>
+              </div>
+              <sc-for list="{{ previewRows }}" as="row" hint-placeholder-count="4">
+                <div data-reg-row role="button" tabindex="0" aria-label="Open register entry {{ row.no }}" onClick="{{ row.open }}" style="display:grid;grid-template-columns:56px 104px 1fr 168px 132px;gap:16px;align-items:center;padding:11px 12px 11px 0;border-bottom:1px {{ row.divider }} var(--rule);cursor:pointer" style-hover="background:var(--wash)" style-focus="outline:2.5px solid var(--seal);outline-offset:-2px">
+                  <span style="font:400 12px/1.4 var(--font-mono);color:var(--muted)">{{ row.no }}</span>
+                  <span style="font:400 12px/1.4 var(--font-mono);color:var(--ink-2)">{{ row.date }}</span>
+                  <span style="font-size:15px;line-height:1.4">
+                    <span style="color:{{ row.factColor }};text-decoration:{{ row.deco }}">{{ row.fact }}</span>
+                    <sc-if value="{{ row.hasNote }}" hint-placeholder-val="{{ false }}"><span style="display:block;font-size:12px;color:var(--muted);margin-top:2px">{{ row.note }}</span></sc-if>
+                  </span>
+                  <span style="font:400 12px/1.4 var(--font-mono);color:{{ row.txColor }}">{{ row.tx }}</span>
+                  <span style="display:flex;align-items:center;justify-content:flex-end;gap:7px">
+                    <sc-if value="{{ row.ring }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;border:1.5px solid var(--seal);flex:none"></span></sc-if>
+                    <span style="font:600 11px/1 var(--font-mono);letter-spacing:.1em;color:{{ row.statusColor }}">{{ row.status }}</span>
+                  </span>
+                </div>
+              </sc-for>
+            </div>
+          </section>
+          <section aria-label="How it works" style="margin:0 40px;border-top:1px solid var(--rule);padding:22px 0 44px">
+            <span class="mn-label">How it works</span>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:16px">
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <span style="font:600 12px/1 var(--font-mono);color:var(--seal)">01</span>
+                <h3 style="font-family:var(--font-display);font-weight:400;font-size:21px;line-height:1.2;margin:0">Commit</h3>
+                <p style="margin:0;font-size:14px;line-height:1.5;color:var(--ink-2)">Type the secret. It never leaves this window.</p>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <span style="font:600 12px/1 var(--font-mono);color:var(--seal)">02</span>
+                <h3 style="font-family:var(--font-display);font-weight:400;font-size:21px;line-height:1.2;margin:0">Prove</h3>
+                <p style="margin:0;font-size:14px;line-height:1.5;color:var(--ink-2)">Your browser builds a proof that the claim is true.</p>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <span style="font:600 12px/1 var(--font-mono);color:var(--seal)">03</span>
+                <h3 style="font-family:var(--font-display);font-weight:400;font-size:21px;line-height:1.2;margin:0">Record</h3>
+                <p style="margin:0;font-size:14px;line-height:1.5;color:var(--ink-2)">Only the proof is stamped into the public register.</p>
+              </div>
+            </div>
+          </section>
+        </sc-if>
+        <sc-if value="{{ onCommit }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:28px 40px 0"><x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.SequenceNav" current="{{ zero }}" hint-size="360px,20px"></x-import></div>
+          <main data-screen-label="Commit" style="display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:start;max-width:900px;padding:32px 40px 48px">
+            <section style="background:var(--ledger);padding:28px;display:flex;flex-direction:column;gap:18px">
+              <span class="mn-label" style="color:rgba(244,239,228,.7)">Private &middot; stays on this device</span>
+              <h2 style="font-family:var(--font-display);font-weight:400;font-size:32px;line-height:1.15;margin:0;color:#F4EFE4">Secret input title</h2>
+              <x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.Input" label="Secret value" privacy="private" placeholder="Enter the secret thing" note="Held in memory on this device. Committing does not send it anywhere." hint-size="100%,110px"></x-import>
+            </section>
+            <aside style="display:flex;flex-direction:column;gap:14px;align-items:flex-start;padding-top:4px">
+              <span class="mn-label" style="color:var(--seal)">What leaves this device</span>
+              <p style="margin:0;font-size:15px;line-height:1.5;color:var(--ink-2)">A commitment: a fingerprint of your secret that reveals nothing about it.</p>
+              <span class="mn-label">What stays</span>
+              <p style="margin:0;font-size:15px;line-height:1.5;color:var(--ink-2)">The secret value itself.</p>
+              <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:14px;color:var(--seal)">{{ errorText }}</p></sc-if>
+              <div style="display:flex;gap:12px;margin-top:8px">
+                <x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.Button" onClick="{{ commit }}" hint-size="120px,44px">Commit</x-import>
+                <x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.Button" variant="ghost" onClick="{{ navDesk }}" hint-size="90px,44px">Back</x-import>
+              </div>
+            </aside>
+          </main>
+        </sc-if>
+        <sc-if value="{{ onFlight }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:24px;max-width:900px;padding:28px 40px 0">
+            <x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.SequenceNav" current="{{ one }}" hint-size="360px,20px"></x-import>
+            <span style="font:400 13px/1 var(--font-mono);color:var(--muted)">{{ elapsedText }}</span>
+          </div>
+          <main data-screen-label="Proof in flight" style="display:flex;flex-direction:column;align-items:center;gap:28px;max-width:900px;padding:36px 40px 56px">
+            <div class="nd-sealwrap"><x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.Seal" mode="drawing" size="{{ flightSealSize }}" center="IN PROGRESS" duration="{{ proofDur }}" hint-size="230px,230px"></x-import></div>
+            <ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;min-width:340px">
+              <sc-for list="{{ stages }}" as="st" hint-placeholder-count="4">
+                <li style="display:flex;gap:12px;align-items:baseline;font-size:15px;color:{{ st.color }}">
+                  <span style="font:600 12px/1.4 var(--font-mono);color:{{ st.numColor }}">{{ st.num }}</span>
+                  <span>{{ st.text }}</span>
+                </li>
+              </sc-for>
+            </ol>
+            <p style="margin:0;font-size:14px;color:var(--muted);max-width:36em;text-align:center">Proof generation takes a few seconds by design. Nothing about your secret is being sent.</p>
+          </main>
+        </sc-if>
+        <sc-if value="{{ onReceipt }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:28px 40px 0"><x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.SequenceNav" current="{{ two }}" hint-size="360px,20px"></x-import></div>
+          <main data-screen-label="Receipt" style="display:flex;flex-direction:column;align-items:flex-start;gap:24px;max-width:940px;padding:24px 40px 48px">
+            <div style="display:flex;align-items:baseline;gap:18px">
+              <h2 style="font-family:var(--font-display);font-weight:400;font-size:36px;line-height:1.1;margin:0">Receipt</h2>
+              <span style="font:400 12px/1 var(--font-mono);color:var(--muted)">ENTRY NO. {{ receiptNo }}</span>
+            </div>
+            <x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.LedgerSplit" dc-props="{{ ledgerProps }}" hint-size="100%,420px"></x-import>
+            <div style="display:flex;gap:12px">
+              <x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.Button" variant="secondary" onClick="{{ restart }}" hint-size="130px,44px">Start over</x-import>
+              <x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.Button" variant="ghost" onClick="{{ navRegister }}" hint-size="150px,44px">See the register</x-import>
+            </div>
+          </main>
+        </sc-if>
+        <sc-if value="{{ onRegister }}" hint-placeholder-val="{{ false }}">
+          <main data-screen-label="Register" style="display:flex;flex-direction:column;gap:16px;padding:36px 40px 48px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px">
+              <h2 style="font-family:var(--font-display);font-weight:400;font-size:36px;line-height:1.1;margin:0">Register of proofs</h2>
+              <span style="font:400 11px/1 var(--font-mono);letter-spacing:.1em;color:var(--muted)">PUBLIC RECORD &middot; PAGE 07 &middot; {{ entryCount }} ENTRIES</span>
+            </div>
+            <p style="margin:0;font-size:15px;line-height:1.5;color:var(--ink-2);max-width:44em">Every proof this desk has posted, newest first. Each line is public: it shows that something was proved, never what the secret was.</p>
+            <div style="position:relative;margin-top:8px">
+              <span aria-hidden="true" style="position:absolute;left:63px;top:0;bottom:0;width:1px;background:var(--seal);opacity:.35;pointer-events:none"></span>
+              <div style="display:grid;grid-template-columns:56px 104px 1fr 168px 132px;gap:16px;padding:0 12px 8px 0;border-bottom:1.5px solid var(--ink);font:600 10px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted)">
+                <span>NO.</span><span>DATE</span><span>FACT PROVED</span><span>TRANSACTION</span><span style="text-align:right">STATUS</span>
+              </div>
+              <sc-for list="{{ allRows }}" as="row" hint-placeholder-count="5">
+                <div data-reg-row role="button" tabindex="0" aria-label="Open register entry {{ row.no }}" onClick="{{ row.open }}" style="display:grid;grid-template-columns:56px 104px 1fr 168px 132px;gap:16px;align-items:center;padding:11px 12px 11px 0;border-bottom:1px {{ row.divider }} var(--rule);cursor:pointer" style-hover="background:var(--wash)" style-focus="outline:2.5px solid var(--seal);outline-offset:-2px">
+                  <span style="font:400 12px/1.4 var(--font-mono);color:var(--muted)">{{ row.no }}</span>
+                  <span style="font:400 12px/1.4 var(--font-mono);color:var(--ink-2)">{{ row.date }}</span>
+                  <span style="font-size:15px;line-height:1.4">
+                    <span style="color:{{ row.factColor }};text-decoration:{{ row.deco }}">{{ row.fact }}</span>
+                    <sc-if value="{{ row.hasNote }}" hint-placeholder-val="{{ false }}"><span style="display:block;font-size:12px;color:var(--muted);margin-top:2px">{{ row.note }}</span></sc-if>
+                  </span>
+                  <span style="font:400 12px/1.4 var(--font-mono);color:{{ row.txColor }}">{{ row.tx }}</span>
+                  <span style="display:flex;align-items:center;justify-content:flex-end;gap:7px">
+                    <sc-if value="{{ row.ring }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;border:1.5px solid var(--seal);flex:none"></span></sc-if>
+                    <span style="font:600 11px/1 var(--font-mono);letter-spacing:.1em;color:{{ row.statusColor }}">{{ row.status }}</span>
+                  </span>
+                </div>
+              </sc-for>
+            </div>
+          </main>
+        </sc-if>
+        <sc-if value="{{ onVerify }}" hint-placeholder-val="{{ false }}">
+          <main data-screen-label="Verify" style="display:flex;flex-direction:column;gap:18px;align-items:flex-start;max-width:640px;padding:36px 40px 48px">
+            <h2 style="font-family:var(--font-display);font-weight:400;font-size:36px;line-height:1.1;margin:0">Verify a proof</h2>
+            <p style="margin:0;font-size:15px;line-height:1.5;color:var(--ink-2)">Paste a transaction id or an entry number from the register. Verification reads the chain only; no wallet needed.</p>
+            <div style="display:flex;flex-direction:column;gap:6px;width:100%">
+              <label for="nd-verify-q" class="mn-label">Transaction id or entry no.</label>
+              <input id="nd-verify-q" data-verify-input type="text" placeholder="8f3a4c&hellip;c21e or 0047" style="width:100%;box-sizing:border-box;background:var(--wash);border:1px solid var(--rule);border-radius:2px;padding:12px 14px;font:400 14px/1.4 var(--font-mono);color:var(--ink);outline:none" style-focus="outline:2.5px solid var(--seal);outline-offset:2px">
+            </div>
+            <x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.Button" onClick="{{ verify }}" hint-size="110px,44px">Verify</x-import>
+            <sc-if value="{{ hasVerdict }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start;border-top:1px solid var(--rule);padding-top:18px;width:100%">
+                <sc-if value="{{ verdictHasStatus }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="NotaryDeskDesignSystem_b90341.Status" kind="{{ verdictKind }}" hint-size="120px,30px"></x-import></sc-if>
+                <p style="margin:0;font-size:15px;line-height:1.5;color:{{ verdictColor }}">{{ verdictText }}</p>
+              </div>
+            </sc-if>
+          </main>
+        </sc-if>
+      </div>
+      <footer style="position:relative;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 40px;border-top:1px solid var(--rule);z-index:2">
+        <span style="font:400 11px/1 var(--font-mono);letter-spacing:.1em;color:var(--muted)">MIDNIGHT TESTNET &middot; BLOCK {{ blockText }}</span>
+        <span style="font:600 11px/1 var(--font-mono);letter-spacing:.12em;color:var(--ledger-text);background:var(--wash);border:1px solid var(--ledger);border-radius:2px;padding:4px 7px;opacity:.75">PRIVATE BY DEFAULT</span>
+        <div style="position:absolute;bottom:calc(100% + 1px);left:50%;transform:translate(-50%,{{ drawerShift }});width:400px;background:var(--paper);border:1.5px solid var(--ink);box-shadow:0 -10px 30px rgba(0,0,0,.2);opacity:{{ drawerOp }};pointer-events:{{ drawerPe }};transition:transform .3s ease,opacity .3s ease;z-index:5">
+          <div style="display:flex;flex-direction:column;padding:16px 20px 12px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1.5px solid var(--ink);padding-bottom:8px">
+              <span class="mn-label">Desk drawer</span>
+              <span style="font:400 10px/1 var(--font-mono);letter-spacing:.1em;color:var(--muted)">EVERYTHING ELSE</span>
+            </div>
+            <span style="display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--rule);font:600 11px/1 var(--font-mono);letter-spacing:.1em"><span>DOCUMENTATION</span><span style="color:var(--muted)">&#8599;</span></span>
+            <span style="display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--rule);font:600 11px/1 var(--font-mono);letter-spacing:.1em"><span>CONTRACT</span><span style="font-weight:400;color:var(--ink-2)">4B21E7&hellip;8D3F</span></span>
+            <span style="display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;font:600 11px/1 var(--font-mono);letter-spacing:.1em"><span>NETWORK</span><span style="font-weight:400;color:var(--ink-2)">MIDNIGHT TESTNET</span></span>
+            <span style="font-size:12px;font-style:italic;color:var(--muted);border-top:1px solid var(--rule);padding-top:10px">Day and night live on the lamp chain, top right.</span>
+          </div>
+        </div>
+        <span style="position:absolute;left:50%;bottom:0;transform:translateX(-50%);z-index:6">
+          <button class="nd-obj" onClick="{{ toggleDrawer }}" aria-expanded="{{ drawerOpen }}" aria-label="Desk drawer: documentation and settings" style="position:relative;display:block;background:none;border:none;padding:0;cursor:pointer;color:var(--ink-2)" style-hover="color:var(--ink)" style-focus="outline:2.5px solid var(--seal);outline-offset:2px">
+            <svg style="display:block" width="68" height="19" viewBox="0 0 68 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M2.75 19V2.75h62.5V19"></path>
+              <path d="M26 10h16"></path>
+            </svg>
+            <span class="nd-obj-label" style="position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);font:600 9px/1 var(--font-mono);letter-spacing:.12em;color:var(--muted);white-space:nowrap;pointer-events:none;opacity:1">{{ drawerLabel }}</span>
+          </button>
+        </span>
+      </footer>
+    </div>
+  </x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;transitionMs&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:600,&quot;min&quot;:150,&quot;max&quot;:900,&quot;step&quot;:50,&quot;unit&quot;:&quot;ms&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;proofSeconds&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:7.5,&quot;min&quot;:3,&quot;max&quot;:15,&quot;step&quot;:0.5,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+class Component extends DCLogic {
+  state = {
+    screen:'landing', mode:'night', connected:false, drawerOpen:false, t:0, error:'', landingError:'',
+    block:1204867, receiptNo:null, verdict:null,
+    entries:[
+      {no:'0048', date:'14 Jul 2026', fact:'Balance above stated threshold', kind:'pending', tx:'', note:'', block:''},
+      {no:'0047', date:'12 Jul 2026', fact:'Membership in contributor set', kind:'recorded', tx:'8f3a4c\u2026c21e', note:'', block:'1,203,114'},
+      {no:'0046', date:'08 Jul 2026', fact:'Age over eighteen', kind:'recorded', tx:'d90b17\u202644aa', note:'', block:'1,198,406'},
+      {no:'0045', date:'03 Jul 2026', fact:'Escrow account solvency', kind:'recorded', tx:'21c8e0\u20269f3b', note:'', block:'1,191,882'},
+      {no:'0044', date:'27 Jun 2026', fact:'Age over eighteen', kind:'void', tx:'77b2d4\u20260e6c', note:'Reissued as no. 0046', block:'1,184,551'}
+    ]
+  };
+  componentDidMount(){
+    this.applyDur();
+    const saved = localStorage.getItem('nd-proto-mode');
+    if(saved === 'day' || saved === 'night') this.setState({mode:saved});
+    this._block = setInterval(()=>this.setState(s=>({block:s.block+1})), 6000);
+    if(!window.NotaryDeskDesignSystem_b90341){
+      this._nsPoll = setInterval(()=>{ if(window.NotaryDeskDesignSystem_b90341){ clearInterval(this._nsPoll); this.forceUpdate(); } }, 120);
+    }
+  }
+  componentDidUpdate(){ this.applyDur(); }
+  componentWillUnmount(){ clearInterval(this._timer); clearInterval(this._nsPoll); clearInterval(this._block); }
+  applyDur(){
+    const ms = this.props.transitionMs ?? 400;
+    document.documentElement.style.setProperty('--nd-dur', (ms/1000)+'s');
+  }
+  dur(){ return this.props.proofSeconds ?? 7.5; }
+  fmtBlock(n){ return n.toLocaleString('en-US'); }
+  startFlight(){
+    clearInterval(this._timer);
+    this.setState({screen:'flight', t:0});
+    this._timer = setInterval(()=>{
+      this.setState(s=>({t:Math.round((s.t+0.1)*10)/10}), ()=>{
+        if(this.state.t >= this.dur()+0.1){ clearInterval(this._timer); this.recordProof(); }
+      });
+    },100);
+  }
+  recordProof(){
+    this.setState(s=>{
+      const entries = s.entries.map(e => e.no==='0049' ? {...e, kind:'recorded', tx:'4b21e7\u20268d3f', block:this.fmtBlock(s.block)} : e);
+      return {entries, screen:'receipt', receiptNo:'0049'};
+    });
+  }
+  openReceipt(no){ this.setState({screen:'receipt', receiptNo:no}); }
+  mapRow(e){
+    const kind = e.kind;
+    return {
+      no:e.no, date:e.date, fact:e.fact, note:e.note, hasNote:!!e.note,
+      status:kind.toUpperCase(),
+      factColor: kind==='void' ? 'var(--muted)' : 'var(--ink)',
+      deco: kind==='void' ? 'line-through' : 'none',
+      tx: kind==='pending' ? '\u2026' : e.tx,
+      txColor: kind==='recorded' ? 'var(--ink-2)' : 'var(--muted)',
+      statusColor: kind==='recorded' ? 'var(--ink)' : 'var(--muted)',
+      ring: kind==='recorded',
+      divider: kind==='pending' ? 'dashed' : 'solid',
+      open: ()=>this.openReceipt(e.no)
+    };
+  }
+  ledgerProps(){
+    const NS = window.NotaryDeskDesignSystem_b90341;
+    if(!NS) return {publicRows:[],privateRows:[]};
+    const e = this.state.entries.find(x=>x.no===this.state.receiptNo) || this.state.entries[0];
+    return {
+      publicRows:[
+        {label:'Proof status', value:React.createElement(NS.Status,{kind:e.kind})},
+        {label:'Commitment', value:'Commitment hash', mono:true},
+        {label:'Transaction', value:(e.kind==='pending' ? 'Awaiting inclusion \u2026' : e.tx), mono:true},
+        {label:'Recorded at', value:(e.block ? 'Block '+e.block : 'Block reference'), mono:true}
+      ],
+      privateRows:[
+        {label:'Secret value', value:'Never shown on chain'},
+        {label:'Question answered', value:'Question title'},
+        {label:'Where it lives', value:'This device'}
+      ],
+      publicNote:'Anyone can verify this proof. It reveals only that the claim is true.',
+      privateNote:'Kept by you. The chain never saw it.',
+      seal:React.createElement(NS.Seal,{mode:'stamped', size:140, center:e.kind==='recorded'?'RECORDED':e.kind.toUpperCase()})
+    };
+  }
+  renderVals(){
+    const s = this.state;
+    const STAGES = ['Reading commitment','Building circuit','Generating proof','Posting to chain'];
+    const step = this.dur()/4;
+    const stage = Math.min(3, Math.floor(s.t/step));
+    const onDeskFlow = ['landing','commit','flight','receipt'].includes(s.screen);
+    const rows = s.entries.map(e=>this.mapRow(e));
+    const v = s.verdict;
+    return {
+      winW:1440, winH:920,
+      minusOne:-1, zero:0, one:1, two:2, sealSize:240, flightSealSize:230,
+      mode:s.mode, connected:s.connected,
+      chainLabel: s.mode==='night' ? 'DAY' : 'NIGHT',
+      statProofs: s.entries.filter(e=>e.kind==='recorded').length,
+      statPending: s.entries.filter(e=>e.kind==='pending').length,
+      meanProof: (this.props.proofSeconds ?? 7.5).toFixed(1),
+      drawerOpen: s.drawerOpen,
+      toggleDrawer: ()=>this.setState(st=>({drawerOpen:!st.drawerOpen})),
+      drawerLabel: s.drawerOpen ? 'CLOSE DRAWER' : 'DOCS & SETTINGS',
+      drawerShift: s.drawerOpen ? '0px' : '16px',
+      drawerOp: s.drawerOpen ? 1 : 0,
+      drawerPe: s.drawerOpen ? 'auto' : 'none',
+      onLanding:s.screen==='landing', onCommit:s.screen==='commit', onFlight:s.screen==='flight',
+      onReceipt:s.screen==='receipt', onRegister:s.screen==='register', onVerify:s.screen==='verify',
+      deskColor:onDeskFlow?'var(--ink)':'var(--muted)', deskLine:onDeskFlow?'var(--seal)':'transparent',
+      regColor:s.screen==='register'?'var(--ink)':'var(--muted)', regLine:s.screen==='register'?'var(--seal)':'transparent',
+      verColor:s.screen==='verify'?'var(--ink)':'var(--muted)', verLine:s.screen==='verify'?'var(--seal)':'transparent',
+      hasError:!!s.error, errorText:s.error,
+      hasLandingError:!!s.landingError, landingError:s.landingError,
+      elapsedText:s.t.toFixed(1)+'s',
+      proofDur:this.dur(),
+      blockText:this.fmtBlock(s.block),
+      entryCount:s.entries.length,
+      previewRows:rows.slice(0,4),
+      allRows:rows,
+      receiptNo:s.receiptNo || '0047',
+      ledgerProps:this.ledgerProps(),
+      hasVerdict:!!v, verdictHasStatus:!!(v && v.kind), verdictKind:v?v.kind:'recorded',
+      verdictText:v?v.text:'', verdictColor:v && !v.kind ? 'var(--seal)' : 'var(--ink-2)',
+      stages:STAGES.map((txt,i)=>({
+        num:'0'+(i+1),
+        text:txt + (i<stage ? ' \u00B7 done' : (i===stage && s.screen==='flight' ? ' \u2026' : '')),
+        color:i<=stage ? 'var(--ink)' : 'var(--muted)',
+        numColor:i<=stage ? 'var(--seal)' : 'var(--muted)'
+      })),
+      pull:(e)=>{
+        const next = s.mode==='night' ? 'day' : 'night';
+        this.setState({mode:next});
+        localStorage.setItem('nd-proto-mode', next);
+        const btn = e.currentTarget;
+        btn.classList.remove('nd-tug'); void btn.offsetWidth; btn.classList.add('nd-tug');
+        if(e.detail) btn.blur();
+      },
+      toggleWallet:()=>this.setState({connected:!s.connected, landingError:''}),
+      navDesk:()=>{ clearInterval(this._timer); this.setState({screen:'landing', error:'', landingError:''}); },
+      navRegister:()=>{ clearInterval(this._timer); this.setState({screen:'register'}); },
+      navVerify:()=>{ clearInterval(this._timer); this.setState({screen:'verify', verdict:null}); },
+      goCommit:()=>{
+        if(!s.connected){ this.setState({landingError:'Connect your wallet first. Your address is public; your secret is not.'}); return; }
+        this.setState({screen:'commit', error:'', landingError:''});
+      },
+      restart:()=>this.setState({screen:'landing', error:'', t:0}),
+      commit:(e)=>{
+        const card = e.currentTarget.closest('[data-card]');
+        const input = card && card.querySelector('input');
+        if(input && input.value.trim().length === 0){
+          this.setState({error:'Enter a secret value first. It stays on this device.'});
+          return;
+        }
+        this.setState(st=>({
+          error:'',
+          entries:[{no:'0049', date:'15 Jul 2026', fact:'Question title', kind:'pending', tx:'', note:'', block:''}, ...st.entries.filter(x=>x.no!=='0049')]
+        }));
+        this.startFlight();
+      },
+      verify:(e)=>{
+        const card = e.currentTarget.closest('[data-card]');
+        const input = card && card.querySelector('[data-verify-input]');
+        const q = input ? input.value.trim() : '';
+        if(!q){ this.setState({verdict:{kind:null, text:'Enter a transaction id or entry number first.'}}); return; }
+        const qq = q.toLowerCase().replace('\u2026','');
+        const hit = this.state.entries.find(x => x.no===q || (x.tx && x.tx.toLowerCase().replace('\u2026','').startsWith(qq.slice(0,6))));
+        if(!hit){ this.setState({verdict:{kind:null, text:'No proof found under that id. Check the transaction reference against the register.'}}); return; }
+        const texts = {
+          recorded:'This proof is on chain under entry no. '+hit.no+'. It reveals only that the claim is true.',
+          pending:'Entry no. '+hit.no+' is awaiting inclusion. Check again in a few seconds.',
+          void:'Entry no. '+hit.no+' was voided. '+(hit.note || 'Ask the holder for the current entry.')
+        };
+        this.setState({verdict:{kind:hit.kind, text:texts[hit.kind]}});
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
