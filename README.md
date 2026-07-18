@@ -107,6 +107,13 @@ is deployed.
   applicant-asserted, not issuer-certified; the witness carries a MOCKED
   trust label until that lands. Credential expiry is checked in circuit
   once it does; stale income does not pass.
+- The identity commitment C is one stable value per applicant, because
+  credentials bind to it, and every pool entry publishes it. Two entries
+  with the same C are therefore linkable across listings, and once a
+  winner reveals on one listing, their unrevealed entries elsewhere become
+  identity-linked as well. The nullifier channel stays unlinkable as
+  designed; the C channel does not. A per-listing wrapper commitment over
+  C would close this but changes interface.md, which is a team decision.
 - The frontend in app/ is the full demo flow on mock data: the listing,
   the three applicant personas, their credentials, commitments,
   nullifiers, and every transaction id are sample values defined in
