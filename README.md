@@ -121,8 +121,19 @@ is deployed.
   not a real proof. Wallet connect goes through the real Midnight dapp
   connector (enumerates injected wallets, connects on preprod, shows the
   address); with no wallet extension installed it falls back to a local
-  mock toggle with a placeholder address, labeled in the code. Wiring the
-  flow to the deployed contract replaces data.js.
+  mock toggle with a placeholder address, labeled in the code. The chain
+  seam is in place: the app reads the wallet's own provider configuration
+  (indexer, proof server, network) instead of hardcoding URIs, flags a
+  network mismatch on connect, probes the proof server, and serves the
+  committed proving artifacts at /zk/rentpool. The switch is
+  CONTRACT_ADDRESS in app/src/chain.js: empty today, so the drawer reads
+  DEPLOY PENDING and the demo simulation runs; the deploy fills it, and
+  replacing data.js with indexer reads is the wiring task that follows.
+- Not deployed to testnet yet. Deployment needs Docker and the Compact
+  toolchain, which only one team machine has. The full runbook, including
+  the resolution of the wallet-sync-vs-preprod blocker (deployment uses a
+  seed-based env wallet, so Lace sync issues do not block it), is
+  contract/deploy.md. Address and tx hash land here when it runs.
 
 ## Repo layout
 
