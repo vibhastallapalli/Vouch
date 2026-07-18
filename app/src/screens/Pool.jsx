@@ -2,7 +2,7 @@ import Button from '../ds/Button.jsx'
 import { LISTING, HARD_BADGES, SOFT_FIELDS } from '../data.js'
 
 const dirOk = (v, { dir, target }) => (dir === 'gte' ? v >= target : v <= target)
-const moveInLabel = (w) => (w <= 1 ? 'THIS WEEK' : 'IN ' + w + ' WK')
+const moveInLabel = (w) => (w <= 1 ? 'THIS WK' : w + ' WK')
 
 export default function Pool({ entries, filters, onToggleFilter, onSetFilter, committed, onCommit, onContinueAsCommitted }) {
   const matching = entries.filter((p) => SOFT_FIELDS.every((f) => !filters[f.key] || dirOk(p.soft[f.key], filters[f.key])))
@@ -72,11 +72,13 @@ export default function Pool({ entries, filters, onToggleFilter, onSetFilter, co
               <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                 {HARD_BADGES.map((b) => <span key={b.key} className="nd-badge">{b.label}</span>)}
               </div>
-              <div style={{ font: '400 12px/1.7 var(--font-mono)', color: 'var(--ink-2)' }}>
-                <span style={{ display: 'block' }}>MOVE-IN {moveInLabel(p.soft.moveInWeeks)} · {p.soft.leaseMonths}-MONTH LEASE</span>
-                <span style={{ display: 'block' }}>{p.soft.occupants} OCCUPANT{p.soft.occupants > 1 ? 'S' : ''} · {p.soft.pets} PET{p.soft.pets === 1 ? '' : 'S'}</span>
-                <span style={{ display: 'block', color: 'var(--muted)' }}>COMMITMENT {p.commitment}</span>
+              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                <span className="nd-pref">{p.soft.leaseMonths} MO LEASE</span>
+                <span className="nd-pref">MOVE-IN {moveInLabel(p.soft.moveInWeeks)}</span>
+                <span className="nd-pref">{p.soft.occupants} OCCUPANT{p.soft.occupants > 1 ? 'S' : ''}</span>
+                <span className="nd-pref">{p.soft.pets} PET{p.soft.pets === 1 ? '' : 'S'}</span>
               </div>
+              <span style={{ font: '400 12px/1.7 var(--font-mono)', color: 'var(--muted)' }}>COMMITMENT {p.commitment}</span>
               {!committed && <span><Button variant="secondary" onClick={() => onCommit(p)}>Commit to this entry</Button></span>}
             </div>
           )

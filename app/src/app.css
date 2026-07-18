@@ -5,9 +5,10 @@ body { margin: 0; background: #191512; }
 [data-card]{--card-surface:#211D1A;--paper:#282320;--ink:#F8F7F3;--ink-2:rgba(248,247,243,.72);--muted:rgba(248,247,243,.48);--wash:rgba(248,247,243,.07);--rule:rgba(248,247,243,.26);--seal:#9C3A2C;--seal-press:#7C2C21;--ledger:#22362D;--ledger-text:rgba(196,216,203,.85);--pool:1;--night:1;--day:0;--steam:#FFBE74;--coffee:#E8A85C}
 [data-card][data-mode="day"]{--card-surface:#F8F7F3;--paper:#F8F7F3;--ink:#211D1A;--ink-2:#4A443C;--muted:#6B6459;--wash:#EBE5D8;--rule:#C9C2B6;--seal:#872A21;--seal-press:#6E1F18;--ledger:#2E4A3F;--ledger-text:#2E4A3F;--pool:0;--night:0;--day:1;--steam:#B06F35;--coffee:#C98A45}
 
-/* badge palette — kept legible in both themes. proven=green, landlord-verified=gold */
-[data-card]{--badge-bg:#233A31;--badge-ink:#CFE6D8;--badge-line:#3C5F50;--vbadge-bg:#553A1A;--vbadge-ink:#F1D19A;--vbadge-line:#C99A5B}
-[data-card][data-mode="day"]{--badge-bg:#E4EDE7;--badge-ink:#2E4A3F;--badge-line:#5C7C6E;--vbadge-bg:#F4E4C4;--vbadge-ink:#7A5A1E;--vbadge-line:#B9924E}
+/* badge palette — kept legible in both themes.
+   proven (from us) = seal-red · landlord-verified = gold · self-claimed pref = green */
+[data-card]{--pbadge-bg:#3A211B;--pbadge-ink:#F2C9BE;--pbadge-line:#8A3A2C;--badge-bg:#233A31;--badge-ink:#CFE6D8;--badge-line:#3C5F50;--vbadge-bg:#553A1A;--vbadge-ink:#F1D19A;--vbadge-line:#C99A5B}
+[data-card][data-mode="day"]{--pbadge-bg:#F3DAD3;--pbadge-ink:#872A21;--pbadge-line:#C08578;--badge-bg:#E4EDE7;--badge-ink:#2E4A3F;--badge-line:#5C7C6E;--vbadge-bg:#F4E4C4;--vbadge-ink:#7A5A1E;--vbadge-line:#B9924E}
 
 [data-card],[data-card] *{transition:background-color var(--nd-dur) ease,color var(--nd-dur) ease,border-color var(--nd-dur) ease,box-shadow var(--nd-dur) ease,opacity var(--nd-dur) ease}
 [data-card] svg *{transition:stroke var(--nd-dur) ease,fill var(--nd-dur) ease,opacity var(--nd-dur) ease}
@@ -50,8 +51,9 @@ body { margin: 0; background: #191512; }
 .nd-walletopt:hover{background:var(--wash)}
 .nd-walletopt:focus-visible{outline:2.5px solid var(--seal);outline-offset:-2px}
 
-.nd-badge{display:inline-flex;align-items:center;gap:6px;font:600 10px/1 var(--font-mono);letter-spacing:.1em;color:var(--badge-ink);background:var(--badge-bg);border:1px solid var(--badge-line);border-radius:2px;padding:5px 8px;white-space:nowrap}
+.nd-badge{display:inline-flex;align-items:center;gap:6px;font:600 10px/1 var(--font-mono);letter-spacing:.1em;color:var(--pbadge-ink);background:var(--pbadge-bg);border:1px solid var(--pbadge-line);border-radius:2px;padding:5px 8px;white-space:nowrap}
 .nd-badge--verified{background:var(--vbadge-bg);color:var(--vbadge-ink);border-color:var(--vbadge-line)}
+.nd-pref{display:inline-flex;align-items:center;font:600 10px/1 var(--font-mono);letter-spacing:.1em;color:var(--badge-ink);background:var(--badge-bg);border:1px solid var(--badge-line);border-radius:2px;padding:5px 8px;white-space:nowrap}
 
 .nd-filterbtn{display:flex;align-items:center;gap:8px;background:none;border:1px solid var(--rule);border-radius:2px;padding:8px 12px;cursor:pointer;font:600 11px/1 var(--font-mono);letter-spacing:.1em;color:var(--ink-2)}
 .nd-filterbtn[aria-pressed="true"]{border-color:var(--seal);color:var(--ink)}
