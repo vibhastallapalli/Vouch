@@ -2,8 +2,12 @@ pragma language_version >= 0.22;
 
 import CompactStandardLibrary;
 
-// Circuit shapes follow interface.md sections 8 and 9. apply carries real
-// logic; the remaining bodies get theirs in later tasks.
+// Circuit shapes follow interface.md sections 8 and 9. apply, commitToApplicant,
+// and revealAndDeposit carry real logic; confirmRelease and refund are still
+// stubs. NOTE: not compiled on this machine (no Compact CLI on PATH here); the
+// commit/reveal bodies are written by mirroring the compiled apply circuit's
+// proven idioms and must be compiled on the toolchain machine. See README
+// limitations.
 
 // Identity fields bound under the commitment C (interface.md section 2).
 // C binds pk = H(s), never s itself, so opening C at reveal cannot leak the
@@ -32,6 +36,16 @@ export ledger nullifiers: Set<Bytes<32>>;
 
 // The anonymous applicant pool, interface.md section 6.
 export ledger pool: Set<PoolEntry>;
+
+// Landlord's commitment: the pool entry (listing + C) it commits to, plus the
+// listings already committed so a listing cannot be committed twice.
+// interface.md section 9.
+export ledger commits: Set<PoolEntry>;
+export ledger committedListings: Set<Bytes<32>>;
+
+// Listings whose committed applicant has revealed and paid the deposit. MOCKED
+// escrow: this records status only, no real shielded-coin custody. See README.
+export ledger deposited: Set<Bytes<32>>;
 
 // Applicant-local wallet state (interface.md section 2). Never on chain.
 witness identitySecret(): Bytes<32>;
@@ -81,13 +95,38 @@ export circuit apply(listingId: Bytes<32>, monthlyRent: Uint<64>, incomeRatio: U
   pool.insert(disclose(PoolEntry { listingId: listingId, c: c }));
 }
 
-// Landlord commits to one pool entry by its identity commitment C.
+// Landlord commits to one pool entry by its identity commitment C. Both args
+// are public listing data, so no disclosure is needed. The C must be a real
+// entry in this listing's pool, and a listing can only be committed once.
 export circuit commitToApplicant(listingId: Bytes<32>, applicantC: Bytes<32>): [] {
+  assert(pool.member(PoolEntry { listingId: listingId, c: applicantC }), "not a pool entry for this listing");
+  assert(!committedListings.member(listingId), "listing already committed");
+  committedListings.insert(listingId);
+  commits.insert(PoolEntry { listingId: listingId, c: applicantC });
 }
 
 // Committed applicant opens C and pays the deposit into escrow in one
-// transaction. interface.md section 9 step 2.
+// transaction. interface.md section 9 step 2. Recomputing C exactly as apply
+// does (pk = H(s), C = commit(identity fields, r)) proves ownership: only the
+// person behind the committed C can produce an opening that lands in commits.
 export circuit revealAndDeposit(listingId: Bytes<32>): [] {
+  const s = identitySecret();
+  const pk = persistentHash<Vector<2, Bytes<32>>>([pad(32, "rentpool:pk"), s]);
+  const c = persistentCommit<IdentityFields>(
+    IdentityFields {
+      nameHash: identityNameHash(),
+      dobHash: identityDobHash(),
+      contactHash: identityContactHash(),
+      pk: pk
+    },
+    identityBlinding()
+  );
+  assert(commits.member(disclose(PoolEntry { listingId: listingId, c: c })), "not the committed applicant");
+
+  // MOCKED deposit: escrow status only. Real shielded-coin custody
+  // (send/receiveShielded, zswap) is not wired; see README limitations.
+  assert(!deposited.member(listingId), "deposit already made");
+  deposited.insert(listingId);
 }
 
 // Deposit released to landlord on confirm.
