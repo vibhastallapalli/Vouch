@@ -57,6 +57,10 @@ export const PERSONAS = [
     commitment: '4b0e77…c2d9',
     nullifier: '9a31cd…5f02',
     soft: { leaseMonths: 24, moveInWeeks: 1, occupants: 1, pets: 0 },
+    note: {
+      brief: 'Relocating for a hospital job, can start early.',
+      full: 'Moving in for a nursing role at the regional hospital. I can sign and start paying as soon as the unit is ready and I am flexible on the exact date. Quiet, no pets, hoping to stay several years.',
+    },
     preApplied: true,
     tx: '8f3a4c…c21e',
     date: '17 Jul 2026',
@@ -79,6 +83,10 @@ export const PERSONAS = [
     commitment: '1f7c30…a2e8',
     nullifier: '3b8e21…9c04',
     soft: { leaseMonths: 18, moveInWeeks: 5, occupants: 2, pets: 0 },
+    note: {
+      brief: 'Two remote workers, no pets, long-term.',
+      full: 'My partner and I both work from home and want a stable long-term place. We keep to ourselves and can share references from our current landlord if that helps.',
+    },
     preApplied: true,
     tx: 'a1b2c3…d4e5',
     date: '16 Jul 2026',
@@ -90,6 +98,10 @@ export const PERSONAS = [
     commitment: '7a2d90…4f1b',
     nullifier: '2c9f57…b310',
     soft: { leaseMonths: 12, moveInWeeks: 4, occupants: 3, pets: 1 },
+    note: {
+      brief: 'Small family, one cat, need move-in flexibility.',
+      full: 'Family of three with one well-behaved cat. Our current lease ends soon so we would need about a month of flexibility on move-in, and we are happy to sign a longer lease for the right place.',
+    },
     preApplied: true,
     tx: 'b2c3d4…e5f6',
     date: '16 Jul 2026',

@@ -2,7 +2,19 @@ import Button from '../ds/Button.jsx'
 import { LISTING, HARD_BADGES, SOFT_FIELDS } from '../data.js'
 
 const dirOk = (v, { dir, target }) => (dir === 'gte' ? v >= target : v <= target)
-const moveInLabel = (w) => (w <= 1 ? 'THIS WEEK' : 'IN ' + w + ' WK')
+const moveInLabel = (w) => (w <= 1 ? 'THIS WK' : w + ' WK')
+
+const CheckIcon = () => (
+  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block', flex: 'none' }}>
+    <path d="M5 13l4 4L19 7" />
+  </svg>
+)
+
+const NoteIcon = () => (
+  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block', flex: 'none' }}>
+    <path d="M4 5h16M4 10h16M4 15h10" />
+  </svg>
+)
 
 export default function Pool({ entries, filters, onToggleFilter, onSetFilter, committed, onCommit, onContinueAsCommitted }) {
   const matching = entries.filter((p) => SOFT_FIELDS.every((f) => !filters[f.key] || dirOk(p.soft[f.key], filters[f.key])))
@@ -69,14 +81,34 @@ export default function Pool({ entries, filters, onToggleFilter, onSetFilter, co
                   {isCommitted ? 'COMMITTED' : 'GHOST'}
                 </span>
               </div>
-              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                {HARD_BADGES.map((b) => <span key={b.key} className="nd-badge">{b.label}</span>)}
+              <div>
+                <span className="nd-grouplabel nd-grouplabel--proven">PROVEN · FROM US</span>
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 5 }}>
+                  <span className="nd-badge"><CheckIcon /> ALL {HARD_BADGES.length} BADGES PROVEN</span>
+                </div>
               </div>
-              <div style={{ font: '400 12px/1.7 var(--font-mono)', color: 'var(--ink-2)' }}>
-                <span style={{ display: 'block' }}>MOVE-IN {moveInLabel(p.soft.moveInWeeks)} · {p.soft.leaseMonths}-MONTH LEASE</span>
-                <span style={{ display: 'block' }}>{p.soft.occupants} OCCUPANT{p.soft.occupants > 1 ? 'S' : ''} · {p.soft.pets} PET{p.soft.pets === 1 ? '' : 'S'}</span>
-                <span style={{ display: 'block', color: 'var(--muted)' }}>COMMITMENT {p.commitment}</span>
+              <div>
+                <span className="nd-grouplabel nd-grouplabel--claimed">SELF-CLAIMED · THEIR WORD</span>
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 5 }}>
+                  <span className="nd-pref">{p.soft.leaseMonths} MO LEASE</span>
+                  <span className="nd-pref">MOVE-IN {moveInLabel(p.soft.moveInWeeks)}</span>
+                  <span className="nd-pref">{p.soft.occupants} OCCUPANT{p.soft.occupants > 1 ? 'S' : ''}</span>
+                  <span className="nd-pref">{p.soft.pets} PET{p.soft.pets === 1 ? '' : 'S'}</span>
+                </div>
               </div>
+              {p.note && (
+                <div className="nd-note">
+                  <button type="button" className="nd-note-trigger" aria-label={'Note from entry ' + p.entryNo}>
+                    <NoteIcon />
+                    <span className="nd-note-brief">{p.note.brief}</span>
+                  </button>
+                  <span className="nd-note-pop" role="tooltip">
+                    <span className="nd-grouplabel nd-grouplabel--claimed" style={{ display: 'block', marginBottom: 7 }}>APPLICANT NOTE</span>
+                    {p.note.full}
+                  </span>
+                </div>
+              )}
+              <span style={{ font: '400 12px/1.7 var(--font-mono)', color: 'var(--muted)' }}>COMMITMENT {p.commitment}</span>
               {!committed && <span><Button variant="secondary" onClick={() => onCommit(p)}>Commit to this entry</Button></span>}
             </div>
           )
