@@ -1,0 +1,17 @@
+{
+  "note": "MOCK approved-issuer registry. Seeded by us, not a live authority (interface.md section 11).",
+  "issuers": [
+    {
+      "issuer": "mock-northline-payroll",
+      "label": "Northline Payroll",
+      "type": "income",
+      "publicKey": "159758645f971d62dcd9d0459f3b3ce94476b473361d9c22fe1acfc6179ca590"
+    },
+    {
+      "issuer": "mock-renttrack-payments",
+      "label": "RentTrack Payments",
+      "type": "reference",
+      "publicKey": "23f72f78947ce0ab70be2ba9cdaf778bbd1ad357c7518f9c0b3f3c7428cf4cb0"
+    }
+  ]
+}
