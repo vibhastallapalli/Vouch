@@ -15,12 +15,19 @@ conditional reveal. Same shape runs jobs, lending, grants, admissions.
 Rentals are the beachhead because the pain is sharpest and money legally
 moves.
 
+The test sentence, filled in: a renter wants to prove they qualify on
+income and a rental track record to a landlord choosing from many
+applicants, without the landlord learning their income, employer,
+identity, or rental history, unless they are the one committed to.
+
 ## Why this matters (verified numbers)
 
 - Fraud: 93.3 percent of surveyed rental housing providers experienced
   application fraud in twelve months; 84.3 percent of those saw falsified
   pay stubs, employment references, or income documentation; respondents
-  wrote off on average nearly 4.2 million dollars in bad debt.
+  wrote off on average nearly 4.2 million dollars in bad debt, and on
+  average 23.8 percent of their eviction filings over three years traced
+  to fraudulent applications.
   A photoshopped PDF passes screening today; a proof signed by a registry
   issuer cannot be forged. Source: NMHC Pulse Survey on rental application
   fraud, January 2024 (US data; the fraud mechanism is universal).
@@ -34,7 +41,8 @@ moves.
   audit and March 2025 national report.
   https://housingrightscanada.com/reports/measuring-discrimination-in-rental-housing-across-canada/
 - Breach liability: Canadian organizations paid on average CA$6.98 million
-  per data breach in 2025. A landlord holding a folder of SINs and pay
+  per data breach in 2025, up 10.4 percent from CA$6.32 million in 2024.
+  A landlord holding a folder of SINs and pay
   stubs carries a seven-figure liability he never priced; here the
   documents are never stored. Source: IBM Cost of a Data Breach Report
   2025, Canadian findings.
@@ -76,6 +84,41 @@ qualified by construction.
 | soft preference plaintext                 | rental history numbers           |
 | landlord commit mark                      | which credentials back an entry  |
 | revealed winner's identity fields + `r`   | losers' everything               |
+
+## What is built vs what is specified but not built
+
+The contract is contracts/rentpool.compact: 138 lines, five exported
+circuits, exactly the entrypoints interface.md names and nothing else.
+
+Built and compiled (proving artifacts committed under
+contract/contracts/managed/rentpool, compiler 0.31.1):
+
+- apply: income threshold proven in zero knowledge, identity commitment
+  binding (C over the identity fields and pk = H(s)), per-listing
+  nullifier derived and spent in circuit.
+
+Built in source, not yet compiled (written on a machine without the
+Compact CLI; must be compiled on the toolchain machine before real proofs
+run through them):
+
+- commitToApplicant: landlord commits to one pool entry by its C, one
+  commit per listing.
+- revealAndDeposit: only the applicant who can reopen the committed C
+  passes; deposit recorded as status only (MOCKED escrow, no funds move).
+
+Specified in interface.md, not built:
+
+- The three reference predicates (months rented, late count, deposit
+  returned) are not in any circuit yet. The demo UI's "all badges proven"
+  pill is simulation for those three; only the income badge has a circuit.
+- The registry check (issuer signature and credential expiry verified in
+  circuit).
+- Real escrow custody, and the confirmRelease and refund circuit bodies
+  (stubs today).
+
+README-only forever, never built by design: guarantor branch for
+first-timers, listing bond drawdown automation, timeout repick, joint
+applicants. If it is in this list it does not exist in code anywhere.
 
 ## The landlord side
 
@@ -134,6 +177,19 @@ qualified by construction.
   now the income figure is applicant-asserted, not issuer-certified; the
   witness carries a MOCKED trust label until that lands. Credential expiry is
   checked in circuit once it does; stale income does not pass.
+- Only the income badge has a circuit today. The three reference predicates
+  (months rented, late count, deposit returned) are specified in interface.md
+  and shown as proven in the demo UI, but no circuit proves them yet; for
+  those three the pool's proven pill is simulation (see the built vs
+  specified section).
+- The demo pool shows ten anonymous entries, but only three demo credential
+  sets exist (issuer/out, applicants A to C). The other seven ghosts carry
+  pool-visible data only and have no credentials behind them; only applicant
+  A's credentials are ever rendered.
+- The committed proving artifacts are served at /zk/rentpool by the dev
+  server only (a vite middleware); a production host would need those files
+  copied into the built bundle. Irrelevant for the localhost demo, noted so
+  nobody trusts a production build blindly.
 - Escrow is mocked in the contract: revealAndDeposit records deposit status in
   a ledger set but moves no funds. Real shielded-coin custody (send and
   receiveShielded over zswap) plus the confirmRelease and refund circuits that
@@ -212,8 +268,9 @@ Pinned versions, built and tested with:
 - Proof server at http://127.0.0.1:6300; image tag recorded in
   contract/deploy.md on deploy
 
-Testnet (preprod) contract address and deploy tx hash land here once the
-deploy runs; not deployed yet (see limitations).
+TODO, deploy pending: the preprod contract address and deploy tx hash go
+here. Not deployed yet; no address exists, and nothing in this repo
+pretends otherwise (see limitations and contract/deploy.md).
 
 ## Repo layout
 
