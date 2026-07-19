@@ -68,8 +68,14 @@ qualified by construction.
 
 ## What is public vs private
 
-See the table in interface.md section 10; it moves here once the contract
-is deployed.
+| On chain, public                          | Private, never on chain          |
+|-------------------------------------------|----------------------------------|
+| listing data (rent, ratio k, thresholds)  | income figure                    |
+| identity commitment C per pool entry      | identity fields behind C         |
+| nullifier N per entry                     | identity secret `s`              |
+| soft preference plaintext                 | rental history numbers           |
+| landlord commit mark                      | which credentials back an entry  |
+| revealed winner's identity fields + `r`   | losers' everything               |
 
 ## The landlord side
 
@@ -89,7 +95,15 @@ is deployed.
 
 - Issuers and the approved issuer registry are mocked. Keys are generated
   locally; the institutions are fake. Every mocked component is labeled in
-  code and listed here.
+  code and listed here. The mock issuer service is issuer/mint.mjs: two fake
+  institutions sign the three demo credential sets and seed the registry (run
+  node issuer/mint.mjs). Signatures are real Ed25519; interface.md section 3
+  names Schnorr-over-Jubjub for in-circuit verification, but that scheme waits
+  on the registry-check circuit, so the mock signs on a curve Node's stdlib
+  can verify today and the swap is the keygen/sign helpers plus a re-mint. The
+  subjectCommitment C in each credential is a stand-in for the wallet-side
+  persistentCommit this off-chain script cannot reproduce; both credentials in
+  a set share one C, which is the binding property that matters.
 - The rental reference assumes platform-issued payment data (rent payment
   platforms, property software). Not every tenancy has it; renters without
   it would lean on the guarantor branch, which is roadmap, not built.
@@ -108,11 +122,23 @@ is deployed.
   Ontario.
 - Contract mid-build status: apply proves the income threshold, binds the
   identity commitment, and spends the per-listing nullifier in circuit.
-  The registry check (issuer signature and credential expiry verified in
-  circuit) is a later task, so right now the income figure is
-  applicant-asserted, not issuer-certified; the witness carries a MOCKED
-  trust label until that lands. Credential expiry is checked in circuit
-  once it does; stale income does not pass.
+  commitToApplicant and revealAndDeposit now carry real logic too: the
+  landlord commits to one pool entry by its C, and only the applicant who can
+  reopen that C (recomputing pk = H(s) and C = commit(identity fields, r))
+  passes the reveal. That is the conditional-unmask guarantee, the demo's
+  climax. These two bodies were written on a machine WITHOUT the Compact CLI,
+  so they are not yet compiled or proof-tested; they mirror the idioms of the
+  already-compiled apply circuit and must be compiled on the toolchain machine
+  before the demo relies on real proofs. The registry check (issuer signature
+  and credential expiry verified in circuit) is still a later task, so right
+  now the income figure is applicant-asserted, not issuer-certified; the
+  witness carries a MOCKED trust label until that lands. Credential expiry is
+  checked in circuit once it does; stale income does not pass.
+- Escrow is mocked in the contract: revealAndDeposit records deposit status in
+  a ledger set but moves no funds. Real shielded-coin custody (send and
+  receiveShielded over zswap) plus the confirmRelease and refund circuits that
+  release or return those funds are stubs; the deposit, release, and refund
+  money paths are not yet live.
 - The identity commitment C is one stable value per applicant, because
   credentials bind to it, and every pool entry publishes it. Two entries
   with the same C are therefore linkable across listings, and once a
@@ -141,6 +167,54 @@ is deployed.
   seed-based env wallet, so Lace sync issues do not block it), is
   contract/deploy.md. Address and tx hash land here when it runs.
 
+## Setup
+
+Two things run locally: the frontend demo (any machine) and the contract
+toolchain plus proof server (only the machine with Docker and the Compact
+CLI; see contract/deploy.md).
+
+Frontend demo:
+
+```
+cd app
+npm install
+npm run dev
+```
+
+Vite serves the demo on the printed localhost port. It runs the full flow on
+mock data (app/src/data.js); no chain, wallet, or proof server required.
+
+Mock credentials:
+
+```
+node issuer/mint.mjs
+```
+
+Regenerates the approved-issuer registry and the three demo credential sets
+under issuer/out/, then self-verifies every signature. Mocked issuers, real
+Ed25519 signatures (see limitations).
+
+Contract (toolchain machine only):
+
+```
+cd contract
+npm run compile
+```
+
+Deploy to preprod and start the local proof server per contract/deploy.md.
+
+Pinned versions, built and tested with:
+
+- Compact compiler 0.31.1 (language 0.23.0, runtime 0.16.0)
+- Node 24.16.0, npm 11.13.0
+- Vite 6.4.3, React 19.2.7, @vitejs/plugin-react 4.7.0 (exact tree in
+  app/package-lock.json)
+- Proof server at http://127.0.0.1:6300; image tag recorded in
+  contract/deploy.md on deploy
+
+Testnet (preprod) contract address and deploy tx hash land here once the
+deploy runs; not deployed yet (see limitations).
+
 ## Repo layout
 
 - interface.md: the locked contract interface. The contract contains the
@@ -152,4 +226,10 @@ is deployed.
   system, tokens imported straight from _ds/. Screens: listing desk,
   applicant credential wallet and proof flow, the anonymous pool with
   live badge filtering and commit, reveal-and-pay, and the per-listing
-  event register. Run with npm install then npm run dev inside app/.
+  event register.
+- issuer/: the mock issuer service (issuer/mint.mjs) and its output
+  (issuer/out/): the approved-issuer registry and the three demo credential
+  sets.
+- contract/: the Compact contract (contracts/rentpool.compact), compiled
+  artifacts under contracts/managed/rentpool, and the deploy runbook
+  (deploy.md).
