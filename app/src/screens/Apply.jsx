@@ -115,9 +115,9 @@ export default function Apply({ persona, soft, onSoftChange, applied, error, onG
               <LockIcon /> Proven, locked — you can't edit these
             </span>
             <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-              {HARD_BADGES.map((b) => <span key={b.key} className="nd-badge" title={b.rule}>{b.label}</span>)}
+              {HARD_BADGES.map((b) => <span key={b.key} className="nd-badge" title={b.rule} aria-label={b.label + ': ' + b.rule}>{b.label}</span>)}
               {landlordVerified && (
-                <span className="nd-badge nd-badge--verified" title="Verified from a bill your previous landlord sent">
+                <span className="nd-badge nd-badge--verified" title="Verified from a bill your previous landlord sent" aria-label="Landlord verified: Verified from a bill your previous landlord sent">
                   <CheckIcon /> LANDLORD VERIFIED
                 </span>
               )}

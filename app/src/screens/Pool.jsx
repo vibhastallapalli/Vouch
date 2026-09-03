@@ -33,7 +33,7 @@ export default function Pool({ entries, filters, onToggleFilter, onSetFilter, co
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <span className="mn-label">Required badges · proven by every entry</span>
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-          {HARD_BADGES.map((b) => <span key={b.key} className="nd-badge" title={b.rule}>{b.label}</span>)}
+          {HARD_BADGES.map((b) => <span key={b.key} className="nd-badge" title={b.rule} aria-label={b.label + ': ' + b.rule}>{b.label}</span>)}
         </div>
         <span className="mn-label" style={{ marginTop: 6 }}>Filter on preferences · self-claimed · set your own threshold</span>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -47,7 +47,7 @@ export default function Pool({ entries, filters, onToggleFilter, onSetFilter, co
                 </button>
                 {active && (
                   <div className="nd-filterctl">
-                    <button type="button" className="nd-dirbtn" onClick={() => onSetFilter(f.key, { dir: active.dir === 'gte' ? 'lte' : 'gte' })} disabled={!!committed}>
+                    <button type="button" className="nd-dirbtn" aria-label={'Change ' + f.label + ' comparison; currently ' + (active.dir === 'gte' ? 'at least' : 'at most')} onClick={() => onSetFilter(f.key, { dir: active.dir === 'gte' ? 'lte' : 'gte' })} disabled={!!committed}>
                       {active.dir === 'gte' ? 'AT LEAST' : 'AT MOST'}
                     </button>
                     <button type="button" className="nd-stepbtn" aria-label={'decrease ' + f.label + ' target'} onClick={() => onSetFilter(f.key, { target: Math.max(f.min, active.target - f.step) })} disabled={!!committed || active.target <= f.min}>−</button>
@@ -98,11 +98,11 @@ export default function Pool({ entries, filters, onToggleFilter, onSetFilter, co
               </div>
               {p.note && (
                 <div className="nd-note">
-                  <button type="button" className="nd-note-trigger" aria-label={'Note from entry ' + p.entryNo}>
+                  <button type="button" className="nd-note-trigger" aria-label={'Note from entry ' + p.entryNo} aria-describedby={'entry-note-' + p.entryNo}>
                     <NoteIcon />
                     <span className="nd-note-brief">{p.note.brief}</span>
                   </button>
-                  <span className="nd-note-pop" role="tooltip">
+                  <span id={'entry-note-' + p.entryNo} className="nd-note-pop" role="tooltip">
                     <span className="nd-grouplabel nd-grouplabel--claimed" style={{ display: 'block', marginBottom: 7 }}>APPLICANT NOTE</span>
                     {p.note.full}
                   </span>
