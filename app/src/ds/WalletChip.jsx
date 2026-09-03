@@ -9,7 +9,7 @@ export default function WalletChip({ connected = false, address = 'addr1···x7
   return (
     <button type="button" className="mn-chip mn-chip--off" onClick={onClick}>
       <span className="mn-chip__mark">Lace</span>
-      <span>{busy ? 'Connecting…' : 'Connect wallet'}</span>
+      <span aria-live="polite">{busy ? 'Connecting…' : 'Connect wallet'}</span>
     </button>
   )
 }
