@@ -47,7 +47,7 @@ export default function Pool({ entries, filters, onToggleFilter, onSetFilter, co
                 </button>
                 {active && (
                   <div className="nd-filterctl">
-                    <button type="button" className="nd-dirbtn" onClick={() => onSetFilter(f.key, { dir: active.dir === 'gte' ? 'lte' : 'gte' })} disabled={!!committed}>
+                    <button type="button" className="nd-dirbtn" aria-label={'Change ' + f.label + ' comparison; currently ' + (active.dir === 'gte' ? 'at least' : 'at most')} onClick={() => onSetFilter(f.key, { dir: active.dir === 'gte' ? 'lte' : 'gte' })} disabled={!!committed}>
                       {active.dir === 'gte' ? 'AT LEAST' : 'AT MOST'}
                     </button>
                     <button type="button" className="nd-stepbtn" aria-label={'decrease ' + f.label + ' target'} onClick={() => onSetFilter(f.key, { target: Math.max(f.min, active.target - f.step) })} disabled={!!committed || active.target <= f.min}>−</button>
