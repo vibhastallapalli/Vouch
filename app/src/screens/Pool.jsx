@@ -33,7 +33,7 @@ export default function Pool({ entries, filters, onToggleFilter, onSetFilter, co
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <span className="mn-label">Required badges · proven by every entry</span>
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-          {HARD_BADGES.map((b) => <span key={b.key} className="nd-badge" title={b.rule}>{b.label}</span>)}
+          {HARD_BADGES.map((b) => <span key={b.key} className="nd-badge" title={b.rule} aria-label={b.label + ': ' + b.rule}>{b.label}</span>)}
         </div>
         <span className="mn-label" style={{ marginTop: 6 }}>Filter on preferences · self-claimed · set your own threshold</span>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
