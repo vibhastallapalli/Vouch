@@ -98,11 +98,11 @@ export default function Pool({ entries, filters, onToggleFilter, onSetFilter, co
               </div>
               {p.note && (
                 <div className="nd-note">
-                  <button type="button" className="nd-note-trigger" aria-label={'Note from entry ' + p.entryNo}>
+                  <button type="button" className="nd-note-trigger" aria-label={'Note from entry ' + p.entryNo} aria-describedby={'entry-note-' + p.entryNo}>
                     <NoteIcon />
                     <span className="nd-note-brief">{p.note.brief}</span>
                   </button>
-                  <span className="nd-note-pop" role="tooltip">
+                  <span id={'entry-note-' + p.entryNo} className="nd-note-pop" role="tooltip">
                     <span className="nd-grouplabel nd-grouplabel--claimed" style={{ display: 'block', marginBottom: 7 }}>APPLICANT NOTE</span>
                     {p.note.full}
                   </span>
