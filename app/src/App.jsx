@@ -168,10 +168,10 @@ export default function App() {
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 28, minWidth: 0 }}>
           <span style={{ fontFamily: 'var(--font-display)', fontSize: 21, lineHeight: 1, whiteSpace: 'nowrap' }}>{APP_NAME}</span>
           <nav style={{ display: 'flex', gap: 20 }}>
-            <button className="nd-navbtn" onClick={goDesk} style={navStyle(screen === 'desk')}>DESK</button>
-            <button className="nd-navbtn" onClick={goApply} style={navStyle(onApplySide)}>APPLY</button>
-            <button className="nd-navbtn" onClick={goPool} style={navStyle(screen === 'pool')}>POOL</button>
-            <button className="nd-navbtn" onClick={goRegister} style={navStyle(screen === 'register')}>REGISTER</button>
+            <button className="nd-navbtn" onClick={goDesk} style={navStyle(screen === 'desk')} aria-current={screen === 'desk' ? 'page' : undefined}>DESK</button>
+            <button className="nd-navbtn" onClick={goApply} style={navStyle(onApplySide)} aria-current={onApplySide ? 'page' : undefined}>APPLY</button>
+            <button className="nd-navbtn" onClick={goPool} style={navStyle(screen === 'pool')} aria-current={screen === 'pool' ? 'page' : undefined}>POOL</button>
+            <button className="nd-navbtn" onClick={goRegister} style={navStyle(screen === 'register')} aria-current={screen === 'register' ? 'page' : undefined}>REGISTER</button>
           </nav>
         </div>
         <span style={{ position: 'relative', display: 'block', flex: 'none' }}>
