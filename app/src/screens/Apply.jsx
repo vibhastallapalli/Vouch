@@ -49,7 +49,7 @@ export default function Apply({ persona, soft, onSoftChange, applied, error, onG
       <main style={{ display: 'grid', gridTemplateColumns: '1.2fr .8fr', gap: 40, alignItems: 'start', maxWidth: 980, padding: '32px 40px 48px' }}>
         <section style={{ background: 'var(--ledger)', padding: 28, display: 'flex', flexDirection: 'column', gap: 18 }}>
           <span className="mn-label" style={{ color: 'rgba(244,239,228,.7)' }}>Private · stays on this device</span>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 32, lineHeight: 1.15, margin: 0, color: '#F4EFE4' }}>Your credential wallet</h2>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 32, lineHeight: 1.15, margin: 0, color: '#F4EFE4' }}>Your credential wallet</h1>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             {PERSONAS.map((x) => (
               <span key={x.id} style={{ font: '600 10px/1 var(--font-mono)', letterSpacing: '.1em', padding: '5px 8px', border: '1px solid rgba(244,239,228,.4)', borderRadius: 2, color: x.id === p.id ? 'var(--ledger)' : 'rgba(244,239,228,.75)', background: x.id === p.id ? '#F4EFE4' : 'transparent' }}>
