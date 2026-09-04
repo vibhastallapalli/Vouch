@@ -177,8 +177,8 @@ export default function App() {
         <span style={{ position: 'relative', display: 'block', flex: 'none' }}>
           <WalletChip connected={connected} address={wallet ? wallet.address : undefined} busy={connecting} onClick={toggleWallet} />
           {pick && (
-            <div style={{ position: 'absolute', top: 'calc(100% + 6px)', right: 0, minWidth: 190, background: 'var(--paper)', border: '1.5px solid var(--ink)', zIndex: 7 }}>
-              <span className="mn-label" style={{ display: 'block', padding: '10px 12px 6px', color: 'var(--muted)' }}>Choose a wallet</span>
+            <div role="group" aria-labelledby="wallet-picker-label" style={{ position: 'absolute', top: 'calc(100% + 6px)', right: 0, minWidth: 190, background: 'var(--paper)', border: '1.5px solid var(--ink)', zIndex: 7 }}>
+              <span id="wallet-picker-label" className="mn-label" style={{ display: 'block', padding: '10px 12px 6px', color: 'var(--muted)' }}>Choose a wallet</span>
               {pick.map((w, i) => (
                 <button key={i} className="nd-walletopt" onClick={() => connectTo(w)}>
                   {w.icon && <img src={w.icon} alt="" width="16" height="16" />}
