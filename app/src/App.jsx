@@ -199,7 +199,7 @@ export default function App() {
         <circle cx="30" cy="44" r="4.5" fill="#FFC878" stroke="none" opacity="var(--pool)" />
       </svg>
 
-      <button className="nd-chain" onClick={pull} aria-label="Pull the lamp chain to switch between day and night">
+      <button className="nd-chain" onClick={pull} aria-label={'Switch to ' + (mode === 'night' ? 'day' : 'night') + ' mode'}>
         <span className="nd-chain-line" />
         <span style={{ display: 'block', width: 7, height: 7, borderRadius: '50%', background: '#A8895A' }} />
         <span style={{ position: 'absolute', top: 'calc(100% + 4px)', left: '50%', transform: 'translateX(-50%)', font: '600 9px/1 var(--font-mono)', letterSpacing: '.14em', color: 'var(--muted)', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
