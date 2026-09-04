@@ -6,7 +6,7 @@ const grid = {
 
 export default function EventLog({ events }) {
   return (
-    <div style={{ position: 'relative' }}>
+    <div aria-live="polite" aria-relevant="additions text" style={{ position: 'relative' }}>
       <span aria-hidden="true" style={{ position: 'absolute', left: 63, top: 0, bottom: 0, width: 1, background: 'var(--seal)', opacity: .35, pointerEvents: 'none' }} />
       <div style={{ ...grid, padding: '0 12px 8px 0', borderBottom: '1.5px solid var(--ink)', font: '600 10px/1 var(--font-mono)', letterSpacing: '.12em', color: 'var(--muted)' }}>
         <span>NO.</span><span>DATE</span><span>EVENT</span><span>TRANSACTION</span><span style={{ textAlign: 'right' }}>STATUS</span>
