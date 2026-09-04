@@ -16,6 +16,7 @@ body { margin: 0; background: #191512; }
 
 [data-card] .mn-btn{white-space:nowrap}
 [data-card] .mn-chip{white-space:nowrap}
+[data-card] .mn-chip:focus-visible{outline:2.5px solid var(--seal);outline-offset:2px}
 [data-card]:not([data-mode="day"]) .mn-btn--primary{color:#F4EFE4}
 [data-card] .mn-tag-private{background:#345248;color:#F4EFE4}
 [data-card]:not([data-mode="day"]) .mn-tag-private{background:#2E4A3F;color:#F4EFE4}
