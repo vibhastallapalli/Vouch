@@ -143,7 +143,7 @@ export default function Apply({ persona, soft, onSoftChange, applied, error, onG
             <span style={{ display: 'block' }}>COMMITMENT {p.commitment}</span>
             <span style={{ display: 'block' }}>NULLIFIER {p.nullifier}</span>
           </div>
-          {error && <p style={{ margin: 0, fontSize: 14, color: 'var(--seal)' }}>{error}</p>}
+          {error && <p role="alert" style={{ margin: 0, fontSize: 14, color: 'var(--seal)' }}>{error}</p>}
           <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
             {applied
               ? <Button variant="secondary" onClick={onOpenReceipt}>See your application</Button>
