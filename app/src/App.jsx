@@ -246,7 +246,7 @@ export default function App() {
       <footer style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, padding: '12px 40px', borderTop: '1px solid var(--rule)', zIndex: 2 }}>
         <span style={{ font: '400 11px/1 var(--font-mono)', letterSpacing: '.1em', color: 'var(--muted)' }}>MIDNIGHT TESTNET {'·'} BLOCK {fmtBlock(block)}</span>
         <span style={{ font: '600 11px/1 var(--font-mono)', letterSpacing: '.12em', color: 'var(--ledger-text)', background: 'var(--wash)', border: '1px solid var(--ledger)', borderRadius: 2, padding: '4px 7px', opacity: .75 }}>PRIVATE BY DEFAULT</span>
-        <div style={{ position: 'absolute', bottom: 'calc(100% + 1px)', left: '50%', transform: 'translate(-50%,' + (drawerOpen ? '0px' : '16px') + ')', width: 400, background: 'var(--paper)', border: '1.5px solid var(--ink)', boxShadow: '0 -10px 30px rgba(0,0,0,.2)', opacity: drawerOpen ? 1 : 0, pointerEvents: drawerOpen ? 'auto' : 'none', transition: 'transform .3s ease,opacity .3s ease', zIndex: 5 }}>
+        <div id="desk-drawer" aria-hidden={!drawerOpen} style={{ position: 'absolute', bottom: 'calc(100% + 1px)', left: '50%', transform: 'translate(-50%,' + (drawerOpen ? '0px' : '16px') + ')', width: 400, background: 'var(--paper)', border: '1.5px solid var(--ink)', boxShadow: '0 -10px 30px rgba(0,0,0,.2)', opacity: drawerOpen ? 1 : 0, pointerEvents: drawerOpen ? 'auto' : 'none', transition: 'transform .3s ease,opacity .3s ease', zIndex: 5 }}>
           <div style={{ display: 'flex', flexDirection: 'column', padding: '16px 20px 12px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', borderBottom: '1.5px solid var(--ink)', paddingBottom: 8 }}>
               <span className="mn-label">Desk drawer</span>
@@ -287,7 +287,7 @@ export default function App() {
           </div>
         </div>
         <span style={{ position: 'absolute', left: '50%', bottom: 0, transform: 'translateX(-50%)', zIndex: 6 }}>
-          <button className="nd-obj" onClick={() => setDrawerOpen((o) => !o)} aria-expanded={drawerOpen} aria-label="Desk drawer: documentation and settings">
+          <button className="nd-obj" onClick={() => setDrawerOpen((o) => !o)} aria-expanded={drawerOpen} aria-controls="desk-drawer" aria-label="Desk drawer: documentation and settings">
             <svg style={{ display: 'block' }} width="68" height="19" viewBox="0 0 68 19" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
               <path d="M2.75 19V2.75h62.5V19" />
               <path d="M26 10h16" />
