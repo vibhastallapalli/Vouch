@@ -177,8 +177,8 @@ export default function App() {
         <span style={{ position: 'relative', display: 'block', flex: 'none' }}>
           <WalletChip connected={connected} address={wallet ? wallet.address : undefined} busy={connecting} onClick={toggleWallet} />
           {pick && (
-            <div style={{ position: 'absolute', top: 'calc(100% + 6px)', right: 0, minWidth: 190, background: 'var(--paper)', border: '1.5px solid var(--ink)', zIndex: 7 }}>
-              <span className="mn-label" style={{ display: 'block', padding: '10px 12px 6px', color: 'var(--muted)' }}>Choose a wallet</span>
+            <div role="group" aria-labelledby="wallet-picker-label" style={{ position: 'absolute', top: 'calc(100% + 6px)', right: 0, minWidth: 190, background: 'var(--paper)', border: '1.5px solid var(--ink)', zIndex: 7 }}>
+              <span id="wallet-picker-label" className="mn-label" style={{ display: 'block', padding: '10px 12px 6px', color: 'var(--muted)' }}>Choose a wallet</span>
               {pick.map((w, i) => (
                 <button key={i} className="nd-walletopt" onClick={() => connectTo(w)}>
                   {w.icon && <img src={w.icon} alt="" width="16" height="16" />}
@@ -199,7 +199,7 @@ export default function App() {
         <circle cx="30" cy="44" r="4.5" fill="#FFC878" stroke="none" opacity="var(--pool)" />
       </svg>
 
-      <button className="nd-chain" onClick={pull} aria-label="Pull the lamp chain to switch between day and night">
+      <button className="nd-chain" onClick={pull} aria-label={'Switch to ' + (mode === 'night' ? 'day' : 'night') + ' mode'}>
         <span className="nd-chain-line" />
         <span style={{ display: 'block', width: 7, height: 7, borderRadius: '50%', background: '#A8895A' }} />
         <span style={{ position: 'absolute', top: 'calc(100% + 4px)', left: '50%', transform: 'translateX(-50%)', font: '600 9px/1 var(--font-mono)', letterSpacing: '.14em', color: 'var(--muted)', whiteSpace: 'nowrap', pointerEvents: 'none' }}>

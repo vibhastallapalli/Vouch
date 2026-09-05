@@ -22,7 +22,7 @@ export default function Pool({ entries, filters, onToggleFilter, onSetFilter, co
     <main style={{ display: 'flex', flexDirection: 'column', gap: 18, padding: '36px 40px 48px', maxWidth: 1080 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 16, flexWrap: 'wrap' }}>
         <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 36, lineHeight: 1.1, margin: 0 }}>The anonymous pool</h1>
-        <span style={{ font: '400 11px/1 var(--font-mono)', letterSpacing: '.1em', color: 'var(--muted)' }}>
+        <span aria-live="polite" aria-atomic="true" style={{ font: '400 11px/1 var(--font-mono)', letterSpacing: '.1em', color: 'var(--muted)' }}>
           {LISTING.id} · {matching.length} OF {entries.length} MATCH
         </span>
       </div>

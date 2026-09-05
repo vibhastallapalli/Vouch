@@ -16,7 +16,7 @@ export default function Desk({ ring, poolCount, proofCount, proofSeconds, events
             Prove you qualify for the apartment. Stay a ghost until you are the one chosen.
           </p>
           <SequenceNav steps={['Prove', 'Apply', 'Reveal']} current={-1} />
-          {landingError && <p style={{ margin: 0, fontSize: 14, color: 'var(--seal)' }}>{landingError}</p>}
+          {landingError && <p role="alert" style={{ margin: 0, fontSize: 14, color: 'var(--seal)' }}>{landingError}</p>}
           <span style={{ marginTop: 6 }}>
             <Button size="lg" onClick={onApply}>Enter the pool</Button>
           </span>
