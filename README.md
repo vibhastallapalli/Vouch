@@ -43,6 +43,24 @@ the documented limitations below, and use the GitHub issue templates for bugs
 or feature proposals. Security-sensitive reports should follow
 [SECURITY.md](SECURITY.md).
 
+## Architecture at a glance
+
+```mermaid
+flowchart LR
+    A[Applicant wallet] -->|private facts + proof witness| P[Proof generation]
+    I[Credential issuer] -->|signed credential| P
+    P -->|qualification proof + commitment| C[Applicant pool contract]
+    L[Landlord / selector] -->|neutral filters| C
+    C -->|anonymous qualified entries| L
+    L -->|commit to one entry| C
+    C -->|selected commitment| A
+    A -->|identity opening| C
+```
+
+The contract should learn only what is required for qualification and selection.
+The selected applicant reveals identity after commitment; losing applicants
+remain unrevealed.
+
 
 The test sentence, filled in: a renter wants to prove they qualify on
 income and a rental track record to a landlord choosing from many
