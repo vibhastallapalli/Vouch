@@ -1,19 +1,66 @@
-# Private applicant pools for rentals
+# Vouch: private applicant pools with conditional reveal
 
-Many people apply for one apartment, each proves they qualify, the landlord
-narrows the anonymous pool by neutral filters, and only the single person he
-commits to at the end is ever unmasked. Nobody hands a stranger their income,
-employer, id, or rental history just to be one of many the landlord sorts
-through and ghosts.
+Vouch is an open-source reference implementation for privacy-preserving
+applicant pools. Applicants prove that they satisfy qualification rules while
+remaining anonymous during filtering; identity is revealed only for the single
+applicant an organization commits to.
 
-Built on Midnight. Zero-knowledge proofs let an applicant prove a fact is
-true (income clears the ratio, solid rental track record) without showing
-the thing behind it (the number, the address, the identity).
+The current reference flow is rentals. A landlord can filter qualified
+applicants using neutral criteria without receiving every applicant's income,
+employer, identity, or rental history up front.
 
-Not a rental app, a reusable pattern: private applicant pools with
-conditional reveal. Same shape runs jobs, lending, grants, admissions.
-Rentals are the beachhead because the pain is sharpest and money legally
-moves.
+Built on Midnight, Vouch uses zero-knowledge proofs to separate **proof of a
+fact** from **disclosure of the underlying data**. For example, an applicant can
+prove that an income threshold is satisfied without publishing the exact income.
+
+The architecture is intentionally broader than rentals. The same pattern can be
+adapted to hiring, lending, grants, admissions, and other workflows where many
+people must prove eligibility but only a small number should ever be identified.
+
+> **Project status:** experimental and not production-ready. The README clearly
+> distinguishes compiled logic, uncompiled logic, mocks, simulations, roadmap
+> work, and deployment status.
+
+## Why this is an open-source building block
+
+The reusable idea in Vouch is the **private applicant pool**:
+
+1. an applicant proves required predicates;
+2. the system admits only qualified entries into an anonymous pool;
+3. an organization filters using allowed attributes;
+4. the organization commits to one entry;
+5. only that selected applicant reveals identity.
+
+That pattern can be reused without adopting the rental-specific UI. Contributors
+can work independently on proof predicates, issuer verification, commitment
+unlinkability, wallet integration, escrow, accessibility, testing, or adapters
+for other applicant-selection domains.
+
+## Contributing
+
+Contributions are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md), review
+the documented limitations below, and use the GitHub issue templates for bugs
+or feature proposals. Security-sensitive reports should follow
+[SECURITY.md](SECURITY.md).
+
+## Architecture at a glance
+
+```mermaid
+flowchart LR
+    A[Applicant wallet] -->|private facts + proof witness| P[Proof generation]
+    I[Credential issuer] -->|signed credential| P
+    P -->|qualification proof + commitment| C[Applicant pool contract]
+    L[Landlord / selector] -->|neutral filters| C
+    C -->|anonymous qualified entries| L
+    L -->|commit to one entry| C
+    C -->|selected commitment| A
+    A -->|identity opening| C
+```
+
+The contract should learn only what is required for qualification and selection.
+The selected applicant reveals identity after commitment; losing applicants
+remain unrevealed.
+
 
 The test sentence, filled in: a renter wants to prove they qualify on
 income and a rental track record to a landlord choosing from many
