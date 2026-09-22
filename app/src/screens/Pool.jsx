@@ -76,7 +76,7 @@ export default function Pool({ entries, filters, onToggleFilter, onSetFilter, co
           return (
             <div key={p.id} className="nd-poolentry">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12 }}>
-                <span style={{ fontFamily: 'var(--font-display)', fontSize: 21 }}>Entry {p.entryNo}</span>
+                <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 21, fontWeight: 400, margin: 0 }}>Entry {p.entryNo}</h2>
                 <span style={{ font: '600 10px/1 var(--font-mono)', letterSpacing: '.1em', color: isCommitted ? 'var(--seal)' : 'var(--muted)' }}>
                   {isCommitted ? 'COMMITTED' : 'GHOST'}
                 </span>
