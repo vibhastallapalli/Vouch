@@ -109,7 +109,7 @@ export default function Pool({ entries, filters, onToggleFilter, onSetFilter, co
                 </div>
               )}
               <span style={{ font: '400 12px/1.7 var(--font-mono)', color: 'var(--muted)' }}>COMMITMENT {p.commitment}</span>
-              {!committed && <span><Button variant="secondary" onClick={() => onCommit(p)}>Commit to this entry</Button></span>}
+              {!committed && <span><Button variant="secondary" aria-label={'Commit to entry ' + p.entryNo} onClick={() => onCommit(p)}>Commit to this entry</Button></span>}
             </div>
           )
         })}
