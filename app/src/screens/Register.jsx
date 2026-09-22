@@ -4,7 +4,7 @@ import { LISTING } from '../data.js'
 export default function Register({ events }) {
   return (
     <main style={{ display: 'flex', flexDirection: 'column', gap: 16, padding: '36px 40px 48px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 16 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 16, flexWrap: 'wrap' }}>
         <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 36, lineHeight: 1.1, margin: 0 }}>Register for {LISTING.id}</h1>
         <span style={{ font: '400 11px/1 var(--font-mono)', letterSpacing: '.1em', color: 'var(--muted)' }}>PUBLIC RECORD · {events.length} ENTRIES</span>
       </div>

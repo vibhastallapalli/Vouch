@@ -13,7 +13,7 @@ export default function Applied({ persona, ring, onPool, onRegister }) {
     <>
       <div style={{ padding: '28px 40px 0' }}><SequenceNav steps={['Prove', 'Apply', 'Reveal']} current={1} /></div>
       <main style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 24, maxWidth: 940, padding: '24px 40px 48px' }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 18 }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 18, flexWrap: 'wrap' }}>
           <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 36, lineHeight: 1.1, margin: 0 }}>You are in the pool</h1>
           <span style={{ font: '400 12px/1 var(--font-mono)', color: 'var(--muted)' }}>ENTRY NO. {p.entryNo}</span>
         </div>
