@@ -9,7 +9,7 @@ export default function Register({ events }) {
         <span style={{ font: '400 11px/1 var(--font-mono)', letterSpacing: '.1em', color: 'var(--muted)' }}>PUBLIC RECORD · {events.length} ENTRIES</span>
       </div>
       <p style={{ margin: 0, fontSize: 15, lineHeight: 1.5, color: 'var(--ink-2)', maxWidth: '44em' }}>
-        Every on-chain event for this listing, newest first. Each line is public: it shows that something was proved or moved, never who a ghost is or what their numbers are.
+        Demo events for this listing, newest first. Transaction IDs and statuses are simulated; this register does not confirm on-chain activity or movement of funds.
       </p>
       <div style={{ marginTop: 8 }}>
         <EventLog events={events} />
