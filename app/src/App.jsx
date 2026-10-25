@@ -162,6 +162,7 @@ export default function App() {
 
   return (
     <div data-card data-mode={mode} style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--card-surface)', color: 'var(--ink)', fontFamily: 'var(--font-body)', overflow: 'hidden' }}>
+      <a className="nd-skip" href="#screen-content">Skip to content</a>
       <div style={{ position: 'absolute', right: -96, top: -64, width: 520, height: 520, pointerEvents: 'none', opacity: 'var(--pool)', background: 'radial-gradient(closest-side,rgba(255,190,116,.22),rgba(255,190,116,.10) 42%,rgba(255,190,116,0) 72%)', zIndex: 1 }} />
 
       <header style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24, padding: '16px 176px 16px 40px', borderBottom: '1.5px solid var(--ink)', zIndex: 2 }}>
@@ -207,7 +208,7 @@ export default function App() {
         </span>
       </button>
 
-      <div style={{ flex: 1, overflow: 'auto', position: 'relative' }}>
+      <div id="screen-content" tabIndex={-1} style={{ flex: 1, overflow: 'auto', position: 'relative' }}>
         {screen === 'desk' && (
           <Desk
             ring={RING}
