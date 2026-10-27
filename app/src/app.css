@@ -1,6 +1,9 @@
 body { margin: 0; background: #191512; }
 :root { --nd-dur: .6s; }
 
+.nd-skip{position:absolute;top:8px;left:8px;transform:translateY(-200%);z-index:10;padding:10px 14px;background:var(--paper);color:var(--ink);font-weight:600}
+.nd-skip:focus{transform:none;outline:2.5px solid var(--seal);outline-offset:2px}
+
 /* night is the default; day is the override */
 [data-card]{--card-surface:#211D1A;--paper:#282320;--ink:#F8F7F3;--ink-2:rgba(248,247,243,.72);--muted:rgba(248,247,243,.48);--wash:rgba(248,247,243,.07);--rule:rgba(248,247,243,.26);--seal:#9C3A2C;--seal-press:#7C2C21;--ledger:#22362D;--ledger-text:rgba(196,216,203,.85);--pool:1;--night:1;--day:0;--steam:#FFBE74;--coffee:#E8A85C}
 [data-card][data-mode="day"]{--card-surface:#F8F7F3;--paper:#F8F7F3;--ink:#211D1A;--ink-2:#4A443C;--muted:#6B6459;--wash:#EBE5D8;--rule:#C9C2B6;--seal:#872A21;--seal-press:#6E1F18;--ledger:#2E4A3F;--ledger-text:#2E4A3F;--pool:0;--night:0;--day:1;--steam:#B06F35;--coffee:#C98A45}
